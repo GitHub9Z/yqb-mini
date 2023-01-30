@@ -4,7 +4,7 @@
 			<view class="status"></view>
 			<view class="search" @click="goSearch">
 				<i class="hxicon-search"></i>
-				<text class="tit">搜索我的订单</text>
+				<text class="tit">搜索我的合约</text>
 			</view>
 		</view>
 		<view class="tabs-box">
@@ -370,10 +370,10 @@
 				statusBarHeight,
 				tabs: [
 					{name:'全部', data:[], api:'',load: false},
-					{name:'待付款', data:[], api:'', load: false},
-					{name:'待使用', data:[], api:'', load: false},
-					{name:'待评价', data:[], api:'', load: false},
-					{name:'退款', data:[], api:'', load: false},
+					{name:'进行中', data:[], api:'', load: false},
+					{name:'已完成', data:[], api:'', load: false},
+					{name:'已违约', data:[], api:'', load: false},
+					{name:'已取消', data:[], api:'', load: false},
 				],
 				bannerData:[
 					{page: '/pages/product/product?id=457', src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'},

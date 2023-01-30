@@ -76,23 +76,23 @@
 			<view class="order-section">
 				<navigator  class="order-item" url="/pages/order/order?state=1" open-type="switchTab"  hover-class="common-hover"  :hover-stay-time="50">
 					<text class="hxicon-pay"></text>
-					<text>待付款</text>
+					<text>进行中</text>
 				</navigator >
 				<navigator  class="order-item" url="/pages/order/order?state=2" open-type="switchTab"   hover-class="common-hover" :hover-stay-time="50">
 					<text class="hxicon-deliver"></text>
-					<text>待收货</text>
+					<text>已完成</text>
 				</navigator >
 				<navigator  class="order-item" url="/pages/order/order?state=3" open-type="switchTab"  hover-class="common-hover"  :hover-stay-time="50">
 					<text class="hxicon-comment"></text>
-					<text>待评价</text>
+					<text>已违约</text>
 				</navigator >
 				<navigator  class="order-item" url="/pages/order/order?state=4" open-type="switchTab"  hover-class="common-hover"  :hover-stay-time="50">
 					<text class="hxicon-refund"></text>
-					<text>退款/售后</text>
+					<text>已关闭</text>
 				</navigator >
 				<navigator  class="order-item" url="/pages/order/order?state=0" open-type="switchTab"  hover-class="common-hover"  :hover-stay-time="50">
 					<text class="hxicon-form"></text>
-					<text>全部订单</text>
+					<text>全部合约</text>
 				</navigator >
 			</view>
 			<!-- 浏览历史 -->

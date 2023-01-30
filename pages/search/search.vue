@@ -36,7 +36,7 @@
 			<swiper  circular duration="400" interval="10000" autoplay >
 				<swiper-item class="swiper-item bannerImg" v-for="(item,index) in bannerData" :key="index">
 					<!-- 图片尺寸为 750*250 -->
-					<image :src="item.src" class="loaded" mode="widthFix"></image>
+					<image :src="item.src" class="loaded" mode="aspectFill"></image>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -56,12 +56,12 @@
 					</view>
 					<view class="right" @click="toStore(store,null)">
 						
-						<text class="tit" >{{store.name}}（{{store.community}}）</text>
+						<text class="tit" >{{store.name}}</text>
 						<view class="row justify-content">
 							<view class="row-left">
 								<i class="hxicon-favorfill "></i>
 								<text class="t1">{{store.mark}}</text>
-								<text class="t2">月售{{store.monthly_sales}}</text>
+								<text class="t2">1349人已签约</text>
 							</view>
 							<view class="row-right">
 								<i class="hxicon-locationfill"></i>
@@ -69,9 +69,7 @@
 							</view>
 						</view>
 						<view class="row">
-							<text >起送￥{{store.starting_price}}</text>
-							<text class="t2" v-if="store.shipping_dees > 0">配送￥{{store.shipping_dees}} </text>
-							<text class="t2" v-else>免费配送</text>
+							<text >最近门店 - {{store.community}}</text>
 						</view>
 						<!-- <view class="row">
 							
@@ -81,19 +79,22 @@
 				<scroll-view scroll-x  class="bottom-box">
 					<view class="bottom-box-container">
 						<view class="goods-box" v-for="(goods,j) in store.goods" :key="j" @click="toStore(store,goods.id)">
-							<view class="img-box">
+<!-- 							<view class="img-box">
 								<image :src="goods.main_pic" mode="aspectFit"></image>
 								<view class="tag">
-									{{goods.tag}}
+									立即到账
 								</view>
-							</view>
+							</view> -->
 							<view class="tit">
 								{{goods.name}}
 							</view>
+							<view class="hint">
+								消费{{goods.sum}}
+							</view>
 							<view class="price-box">
 								<text class="txt1">￥</text>
-								<text class="txt2">{{goods.price}}</text>
-								<text class="txt3">￥{{goods.old_price}}</text>
+								<text class="txt2">{{goods.bonus}}</text>
+								<text class="txt3">/{{goods.type}}</text>
 							</view>
 						</view>
 					</view>
@@ -180,10 +181,10 @@
 				//filterTagList: [{tit:'支持预定'}, {tit:'销量'}, {tit:'速度'}, {tit:'配送费'}] 
 				storeList: [],
 				bannerData:[
-					{page: '/pages/product/product?id=457', src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=57', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=95', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=45', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'}
+					{page: '/pages/product/product?id=457', src: 'https://img0.baidu.com/it/u=3288149204,2595002920&fm=253&fmt=auto&app=138&f=JPEG?w=1134&h=332'},
+					{page: '/pages/product/product?id=57', src:'https://img.zcool.cn/community/015b316045ea1c11013ef90fe5987b.jpg@1280w_1l_2o_100sh.jpg'},
+					{page: '/pages/product/product?id=95', src:'https://img.zcool.cn/community/017d5b5b84a9b1a8012190f2ed83b4.jpg@1280w_1l_2o_100sh.jpg'},
+					{page: '/pages/product/product?id=45', src:'https://marketplace.canva.cn/EAD5sa8t-14/3/0/1600w/canva-%E8%A4%90%E7%BA%A2%E8%89%B2%E7%83%A7%E7%83%A4%E7%85%A7%E7%89%87%E9%A4%90%E9%A5%AE%E4%BF%83%E9%94%80%E4%B8%AD%E6%96%87%E7%94%B5%E5%95%86banner-J8rucfd0uKs.jpg'}
 				],
 				hos_list:[
 					'红烧排骨',
@@ -441,7 +442,7 @@ page{
 		image {
 			border-radius: 8px;
 			width: 100%;
-			
+			// object-fit: cover;
 		}
 	}
 	
@@ -578,9 +579,11 @@ page{
 				
 				white-space: nowrap;
 				.goods-box{
-					width: 80px;
+					width: 90%;
 					margin-left: 12px;
-					display: inline-block;
+					display: flex;
+					align-items: flex-end;
+					// display: inline-block;
 					.img-box{
 						position: relative;
 						width: 80px;
@@ -603,11 +606,22 @@ page{
 						}
 					}
 					.tit{
+						
 						font-size: 14px;
 						margin-top: 4px;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
+					}
+					.hint{
+						flex: 1;
+						margin-left: 5px;
+						font-size: 12px;
+						margin-top: 4px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						color: #9b9e9e;
 					}
 					.price-box{
 						margin-top: 4px;
@@ -623,7 +637,7 @@ page{
 							margin-left: 6px;
 							font-size: 10px;
 							color: #bbbbbb;
-							text-decoration: line-through;
+							// text-decoration: line-through;
 						}
 					}
 				}

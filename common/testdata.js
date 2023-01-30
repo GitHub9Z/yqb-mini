@@ -32,9 +32,9 @@ const storeList = [
 		//商户标识
 		store_id: '852',
 		//店名
-		name: '田东日式料理',
+		name: '肯德基 KFC',
 		//门头
-		avatar: '//imgs.1op.cn/i/hxshop/goods/14.jpg',
+		avatar: 'https://img1.baidu.com/it/u=2220543861,3867330206&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=375',
 		//小区
 		community: '秦阳店',
 		//评分
@@ -42,7 +42,7 @@ const storeList = [
 		//月售
 		monthly_sales: 356,
 		//门店距离，按米计算
-		distance: 500,
+		distance: '1.4km',
 		//起送价
 		starting_price: 3,
 		//配送费
@@ -52,21 +52,47 @@ const storeList = [
 				//id
 				id: '235',
 				//商品名称
-				name: '画画酱酱面',
+				name: '每月堂食',
 				//主图
 				main_pic: '//imgs.1op.cn/i/hxshop/goods/10.jpg',
 				//标签 【招牌，爆款，推荐】等等
 				tag: '招牌',
 				//现价
-				price: 45,
+				bonus: 45,
 				//原价
-				old_price: 65,
+				sum: '满4单',
+				type: '月'
 			}
-			,{id: '236', name: '白色米', main_pic: '//imgs.1op.cn/i/hxshop/goods/6.jpg', tag: '招牌', price: 45, old_price: 65,}
-			,{id: '237', name: '小羊肉', main_pic: '//imgs.1op.cn/i/hxshop/goods/2.jpg', tag: '爆款', price: 45, old_price: 65,}
-			,{id: '238', name: '烤鸡翅', main_pic: '//imgs.1op.cn/i/hxshop/goods/3.jpg', tag: '爆款', price: 45, old_price: 65,}
-			,{id: '239', name: '爆爆鱼', main_pic: '//imgs.1op.cn/i/hxshop/goods/4.jpg', tag: '推荐', price: 45, old_price: 65,}
-			,{id: '240', name: '生吃肉票', main_pic: '//imgs.1op.cn/i/hxshop/goods/5.jpg', tag: '推荐', price: 45, old_price: 65,}
+			,{
+				//id
+				id: '235',
+				//商品名称
+				name: '每月外卖',
+				//主图
+				main_pic: '//imgs.1op.cn/i/hxshop/goods/10.jpg',
+				//标签 【招牌，爆款，推荐】等等
+				tag: '招牌',
+				//现价
+				bonus: 100,
+				//原价
+				sum: '满400元',
+				type: '月'
+			}
+			,{
+				//id
+				id: '235',
+				//商品名称
+				name: '骨灰级玩家',
+				//主图
+				main_pic: '//imgs.1op.cn/i/hxshop/goods/10.jpg',
+				//标签 【招牌，爆款，推荐】等等
+				tag: '招牌',
+				//现价
+				bonus: 500,
+				//原价
+				sum: '满50单',
+				type: '年'
+			}
 			
 		]
 		
