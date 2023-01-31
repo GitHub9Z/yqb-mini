@@ -1,38 +1,5 @@
 <template>
 	<view class="hx-store">
-		<hx-navbar 
-		    :fixed="true"
-		    :color="['#ffffff','#888888']"
-		    barPlaceholder="hidden"
-		    transparent="auto"
-			:back="false" 
-			:rightSlot="false"
-		    :background-color="[245,245,245]"
-			:pageScroll.sync="pageScroll">
-			<block slot="left">
-				<view class="" style="margin-left: 6px; font-size: 22px;" @click="navBack">
-					<i class="hxicon-back"></i>
-				</view>
-				 
-			</block>
-			<view class="ctn">
-			
-				<view class="searchCtn" :style="{'width':navSearchWidth + '%','background-color':'rgba(230,230,230,'+ navSearchBgOpacity +')'}">
-				
-					<i class="hxicon-search"></i>
-					<input confirm-type="search" class="input" type="text" placeholder="输入搜索关键词"  style="font-size: 14px;" :style="{'opacity':navSearchBgOpacity ,'color':navSearchColor}">
-				</view> 
-				<view class="leftBox" style="font-size: 22px;">
-					<i class="hxicon-favor"></i>
-					<i class="hxicon-more"></i>
-					
-				</view>
-				<view class="jrNull"></view>
-			</view>
-		</hx-navbar>
-		
-		
-	
 		<!-- 只需要绑定购物车位置即可 -->
 		<flyInCart ref="inCart" :cartBasketRect="cartBasketRect"></flyInCart>
 		<!-- 头部 -->
@@ -61,32 +28,6 @@
 		
 		<!-- 主体 -->
 		<view class="main" :style="{height: mainHeight}" >
-			<!-- <view class="" :style="{display:showZz}" style="position: absolute;top: 0;bottom: 0;left: 0;width: 100%; background: #3F536E;z-index: 999;opacity: 0.5;">
-				遮罩
-			</view> -->
-			<view class="tabs-box" :style="{'top': 'calc(44px + ' + statusBarHeight + 'px)','background-color':'rgba(245,245,245,'+ navSearchBgOpacity +')'}">
-				<view class="" style="width: 210px; height: 100%;">
-						
-					<view class="hx-tabs">
-						<view class="hx-tabs-item" v-for="(item,i) in tabs" :key="i" :class="{'hx-tabs-active': swiperCurrent == i}" @click="swiperChange(i)" :style="{transition: transtionTime + 'ms'}">
-							<text>{{item.name}}</text>
-						</view>
-						<view class="hx-tabs-slider-box" :style="{transition: transtionTime + 'ms',left:swiperCurrentSliderLeft + 'px'}">
-							<view class="hx-tabs-slider"></view>
-						</view>
-					</view>
-				</view>
-			</view>
-			<swiper 
-			id="mainSwiper"
-			style="height: 100%;"
-			:current="swiperCurrent" 
-			:duration="transtionTime"
-			@transition="transition"
-			@animationfinish="animationfinish">
-				<!-- 购物 -->
-				<swiper-item class="swiper-item" >
-					
 						<view class="scroll-items">
 							
 							<view class="category-list">
@@ -176,156 +117,7 @@
 								</scroll-view>
 							</view>		
 						</view>
-					
-				</swiper-item>
-				
-				<!-- 评价 -->
-				<swiper-item class="swiper-item" >
-					<scroll-view scroll-y style="height: 100%;width: 100%;background-color: #ffffff;" @scroll="asideScroll" :scroll-y="goodsBoxScroll" >
-						<view class="scroll-items evaluate-box" >
-							<view class="evaluate-box-header">
-								
-							</view>
-							<view class="evaluate-box-body">
-								
-							</view>
-							<hx-comment :listData="commentList"></hx-comment>
-						</view>
-					</scroll-view>
-				</swiper-item>
-				
-				<!-- 商家 -->
-				<swiper-item class="swiper-item" >
-					<view class="scroll-items business-box">
-						<view class="info-list hx-mt-15">
-							<view class="info-list-container">
-								<i class="hxicon-location"></i>
-								<text>{{ storeData.address }}</text>
-							</view>
-						</view>
-						
-						<view class="info-list hx-mt-15 ">
-							<view class="info-list-container hx-bb">
-								<i class="hxicon-time"></i>
-								<text>配送时间：{{ storeData.delivery_time }}</text>
-							</view>
-						</view>
-						<view class=" info-list">
-							<view class="info-list-container" @click="goCall(storeData.telephone)">
-								<i class="hxicon-phone"></i>
-								<text style="flex: 1;">商家电话：{{ storeData.telephone }}</text>
-								<view class="right">
-									<text>拨打</text><i class="hxicon-right"></i>
-								</view>
-							</view>
-						</view>
-						<view class="info-list hx-mt-15">
-							<view class="info-list-container" @click="showStoreBoxFunc">
-								<i class="hxicon-new" style="color:#ff3333"></i>
-								<text style="flex: 1;">商家当前热门活动</text>
-								<view class="right">
-									<text>查看</text><i class="hxicon-right"></i>
-								</view>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-			</swiper>
 		</view>
-		
-		<!-- 购物车 -->
-		<view class="foot"  @touchmove.stop.prevent="mpClear" :style="{height: footHeight}" v-if="showFoot">
-			<view class="zz" @click="hideShoppingCar"></view>
-			<view class="btn-box">
-				<view class="btn-box-left" @click="contact">
-					<view class="imgBox">
-						<image src="../../static/store/contact.png" mode=""></image>
-					</view>
-					<text>联系商家</text>
-				</view>
-				<view class="btn-box-line"></view>
-				<view class="btn-box-center" @click="showShoppingCar">
-					<view class="cart" :animation="cartAnimationData">
-						<view class="tag cartNum" v-if="goodsTotalNumber>0">{{goodsTotalNumber}}</view>
-						<image :src="goodsTotalNumber ? '/static/store/cart.png' : '/static/store/cart2.png'" mode=""></image>
-					</view>
-					<view class="priceBox">
-						<view class="hx-txt-18 hx-color-white" v-if="goodsTotalPrice>0">
-							￥{{goodsTotalPrice}}
-						</view>
-						<view class="hx-txt-10 hx-color-gray">
-							另需配送费￥{{shippingDees}}
-						</view>
-					</view>
-				</view>
-				<view class="btn-box-right">
-					<view class="jiesuan"  v-if="goodsTotalPrice>0 && goodsTotalPrice >= startingPrice" @click="jiesuan">
-						去结算
-					</view>
-					<view class="pscj hx-txt-10 hx-color-gray" v-else>
-						<text v-if="startingPrice>0">差￥{{-(goodsTotalPrice-startingPrice)}}起送</text>
-					</view>
-					
-				</view>
-			</view>
-			<view class="cart-box" :style="{display: showCar ? 'flex' : 'none'}">
-				<view class="box-container rebate-box" v-if="showDiscount">
-					<text>已享100减25</text>
-				</view>
-				<view class="box-container operating-box">
-					<view class="operating-box_right">
-						
-					</view>
-					<view class="operating-box_left clear" @click="clearShoppingCart">
-						<i class="hxicon-delete"></i>
-						<text>清空购物车</text>
-					</view>
-				</view>
-				<view class=" goods-box">
-					<view class="" style="flex: 1;">
-						<scroll-view scroll-y="true" class="goods-list-scroll" :scroll-top="carGoodsScrollTop">
-							<view class="goods-list">
-								<view class="box" v-for="(rowData,i) in shoppCart" :key="rowData.id" v-if="rowData.number>0">
-									
-									<view class="m-store-item">
-										<view class="m-img">
-											<image style="width: 100%;height: 100%;" :src="rowData.img" mode="aspectFit"></image>
-										</view>
-										<view class="m-text">
-											<view class="m-title">
-												{{rowData.name}}
-											</view>
-											<view class="m-descripe">
-												
-												{{rowData.current_form ? rowData.form.name + "：" + rowData.current_form.name : rowData.descripe}}
-											</view>
-											<view class="m-price-box" >
-												<view class="symbol">￥</view>
-												<view class="m-price">{{rowData.price}}</view>
-												<view class="m-old-price" v-if="rowData.oldprice">
-													<text>￥{{rowData.oldprice}}</text>
-												</view>
-											</view>
-											<view class="m-distance" > 
-											<view :class="'addEle2_' + rowData.id" class="jumpPosition">
-											</view>
-												<hx-number-box @change="addGoodsChange" :value="rowData.number" :rowData="rowData" :clickTime="animaTime" @addChange="touchOnAddGoods('.addEle2_' + rowData.id,rowData)"></hx-number-box>
-												
-											</view>
-										</view>
-										
-									</view>
-								</view>
-							</view>
-						</scroll-view>
-					</view>
-					
-				</view>
-			</view>
-			
-		</view>
-		 <!-- v-if="showFormBox" -->
-		
 		<!-- 多规格 -->
 		<uni-popup ref="popup" type="center" @change="popupChange">
 			<view class="form-main" v-if="currentGoodsData.name">
@@ -436,12 +228,7 @@
 				cartAnimation: {},
 				cartAnimationData: {},
 				
-				//tabs
-				tabs: [
-					{name:'购物'},
-					{name:'评价'},
-					{name:'商家'},
-				],
+	
 				swiperCurrent: 0,
 				dx: 0,
 				swiperCurrentSliderLeft: 0,
@@ -1405,11 +1192,7 @@
 		.main{
 			position: relative;
 			background-color: #ffffff;
-			
-			#mainSwiper{
-				background-color: #eeeeee;
-				position: sticky;
-				top: calc(40px + 44px + var(--status-bar-height));
+
 				.scroll-items{
 					// 商品列表样式
 					.category-list{
@@ -1634,7 +1417,6 @@
 						
 					}
 				}
-			}
 			
 		}
 		.foot{

@@ -8,6 +8,10 @@ Vue.prototype.$store = store;
 import config from './config.js'
 Vue.prototype.$conf = config
 
+import cuCustom from './colorui/components/cu-custom.vue'
+
+Vue.component('cu-custom', cuCustom)
+
 Vue.prototype.$msg = (title, duration=1500, mask=false, icon='none')=>{
 	//统一提示方便全局修改
 	if(Boolean(title) === false){

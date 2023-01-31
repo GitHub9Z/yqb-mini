@@ -174,6 +174,10 @@
 				
 			}
         }
+        ,{
+            "path" : "pages/promise/promise",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -408,19 +408,12 @@ const goodsData= [{
 	
 //商品种类数据
 const categoryData = [
-		{id: 1,name: '烧烤'},
-		{id: 2,name: '生鲜'},
-		{id: 3,name: '绿蔬'},
-		{id: 4,name: '肉类'},
-		{id: 5,name: '川味'},
-		{id: 6,name: '粤菜'},
-		{id: 7,name: '湘菜'},
-		{id: 8,name: '西餐'},
-		{id: 9,name: '饮料'},
-		{id: 10,name: '糕点'},
-		{id: 11,name: '凉菜'},
-		{id: 12,name: '火锅'},
-		{id: 13,name: '干锅'}
+		{id: 1,name: '餐饮'},
+		{id: 2,name: '娱乐'},
+		{id: 3,name: '日用'},
+		{id: 4,name: '出行'},
+		{id: 5,name: '服装'},
+		{id: 6,name: '运动'}
 	];
 
 //商品详细
