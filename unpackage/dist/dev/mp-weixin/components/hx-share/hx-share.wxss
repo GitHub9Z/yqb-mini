@@ -33,32 +33,19 @@
   top: 0;
   right: 0;
   bottom: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  justify-content: center;
+  align-items: flex-end;
   z-index: 998;
-  -webkit-transition: .3s;
   transition: .3s;
 }
 .mask .bottom {
   position: absolute;
   left: 0;
   bottom: 0;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 90rpx;
   background: #fff;
@@ -69,7 +56,6 @@
 .mask-content {
   width: 100%;
   height: 580rpx;
-  -webkit-transition: .3s;
   transition: .3s;
   background: #fff;
 }
@@ -83,15 +69,9 @@
   height: 110rpx;
   font-size: 13px;
   color: font-color-dark;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   padding-top: 10rpx;
 }
 .share-header:before, .share-header:after {
@@ -108,27 +88,15 @@
   margin-right: 0;
 }
 .share-list {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .share-item {
   min-width: 33.33%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 180rpx;
 }
 .share-item image {

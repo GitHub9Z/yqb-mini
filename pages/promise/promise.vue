@@ -1,8 +1,7 @@
 <template>
 	<view class="content">
 		<view class="content-head fixed">
-			<cu-custom :isBack="true" bgColor="bg-red text-white">
-				<block slot="backText">返回</block>
+			<cu-custom bgColor="bg-red text-white">
 				<block slot="content">我的合约</block>
 			</cu-custom>
 		</view>
@@ -28,7 +27,7 @@
 					</view>
 					<view class="content-main-content-right cu-list menu-avatar">
 						<navigator class="content-main-content-right-item" v-for="item in list.coins"
-						 hover-class='none' :url="`/view/pages/detail?coin_id=${item.coin_id}`" navigateTo>
+						 hover-class='none' :url="`/pages/finishpromise/finishpromise?coin_id=${item.coin_id}`" navigateTo>
 							<view class="content-main-content-right-item-info">
 								<view class="text-black">{{item.coin_name}}</view>
 								<view class="text-gray text-sm flex align-center">

@@ -938,7 +938,6 @@
 	font-size: 30rpx;
 	width:601rpx;
 	height:100rpx;
-	background:-webkit-linear-gradient(left, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
 	background:linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
 	box-shadow:0rpx 0rpx 13rpx 0rpx rgba(164,217,228,0.4);
 	border-radius:2.5rem;
@@ -953,7 +952,6 @@
 	font-size: 30rpx;
 	width:100rpx;
 	height:100rpx;
-	background:-webkit-linear-gradient(left, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
 	background:linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
 	box-shadow:0rpx 0rpx 13rpx 0rpx rgba(164,217,228,0.4);
 	border-radius:2.5rem;
@@ -967,7 +965,6 @@
     border: none ;
     border-radius: 2.5rem ;
     box-shadow: 0 0 60rpx 0 rgba(57, 181, 74, 0.2);
-    -webkit-transition: all 0.4s cubic-bezier(.57,.19,.51,.95);
     transition: all 0.4s cubic-bezier(.57,.19,.51,.95);
 }
 

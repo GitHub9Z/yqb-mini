@@ -36,49 +36,31 @@
 .ctn {
   /* border: 1px solid #e3e3e3; */
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-          justify-content: flex-end;
+  justify-content: flex-end;
   overflow: hidden;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .ctn .searchCtn {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   border-radius: 80rpx;
   padding: 8rpx 12rpx;
   line-height: 44rpx;
   background: #e0e0e0;
   overflow: hidden;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   min-width: 22px;
 }
 .ctn .leftBox {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   width: 53px;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-          flex: none;
+  justify-content: space-between;
+  flex: none;
   margin: 0 8px;
 }
 .ctn .jrNull {
   width: 95px;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-          flex: none;
+  flex: none;
 }
 page {
   background: #ffffff;
@@ -169,7 +151,6 @@ page {
   z-index: 1;
   background-color: #ffffff;
   width: 100%;
-  -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
 .hx-store .header-bg-gray {
@@ -180,7 +161,6 @@ page {
   z-index: 1;
   background-color: #afafaf;
   width: 100%;
-  -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
 .hx-store .header-top-Placeholder {
@@ -194,7 +174,6 @@ page {
   border-radius: 6px;
   padding: 12px;
   margin-bottom: 4px;
-  -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 .hx-store .header .storeInfo .shrink-box {
@@ -230,25 +209,14 @@ page {
 }
 .hx-store .tabs-box .hx-tabs {
   position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   height: 100%;
 }
 .hx-store .tabs-box .hx-tabs-item {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 70px;
   color: #666666;
 }
@@ -261,18 +229,12 @@ page {
 }
 .hx-store .tabs-box .hx-tabs-slider-box {
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  justify-content: center;
   bottom: 0;
   width: 70px;
 }
 .hx-store .tabs-box .hx-tabs-slider {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   background: #f6d200;
   width: 30px;
@@ -282,44 +244,32 @@ page {
   position: relative;
   background-color: #ffffff;
 }
-.hx-store .main #mainSwiper {
-  background-color: #eeeeee;
-  position: -webkit-sticky;
-  position: sticky;
-  top: calc(40px + 44px + 25px);
-}
-.hx-store .main #mainSwiper .scroll-items .category-list {
+.hx-store .main .scroll-items .category-list {
   width: 100%;
   background-color: #fff;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   padding-bottom: 50px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left, .hx-store .main #mainSwiper .scroll-items .category-list .right {
+.hx-store .main .scroll-items .category-list .left, .hx-store .main .scroll-items .category-list .right {
   background: #fff;
   position: absolute;
   top: 0;
   bottom: 0rpx;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left {
+.hx-store .main .scroll-items .category-list .left {
   width: 24%;
   left: 0rpx;
   background-color: #f6f3f3;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row {
+.hx-store .main .scroll-items .category-list .left .row {
   width: 100%;
   height: 45px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   overflow: hidden;
   position: relative;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row .text {
+.hx-store .main .scroll-items .category-list .left .row .text {
   width: 100%;
   font-size: 14px;
   color: #999999;
@@ -331,7 +281,7 @@ page {
   text-align: center;
   padding: 0 16px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row-number {
+.hx-store .main .scroll-items .category-list .left .row-number {
   position: absolute;
   width: 18px;
   height: 18px;
@@ -344,27 +294,27 @@ page {
   font-size: 10px;
   color: #ffffff;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row.active {
+.hx-store .main .scroll-items .category-list .left .row.active {
   height: 45px;
   background-color: #fff;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row.active .text {
+.hx-store .main .scroll-items .category-list .left .row.active .text {
   font-size: 14px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .left .row:last-child {
+.hx-store .main .scroll-items .category-list .left .row:last-child {
   margin-bottom: 200rpx;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right {
+.hx-store .main .scroll-items .category-list .right {
   width: 76%;
   left: 24%;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox {
+.hx-store .main .scroll-items .category-list .right .goodsListBox {
   padding-bottom: 100px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category {
   padding: 0 15px 10px 15px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .s-item {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .s-item {
   height: 45px;
   line-height: 45px;
   font-size: 16px;
@@ -375,119 +325,85 @@ page {
   top: 0;
   z-index: 18;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list:last-child {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list:last-child {
   margin-bottom: 0;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list {
   margin-bottom: 20px;
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box:first-child .m-store-item {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box:first-child .m-store-item {
   margin-top: 0;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box {
   width: 100%;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item {
-  display: -webkit-box;
-  display: -webkit-flex;
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item {
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   width: 100%;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
   margin-top: 15px;
   margin-bottom: 15px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-img {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 85px;
-          flex: 0 0 85px;
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-img {
+  flex: 0 0 85px;
   height: 85px;
   background: #eee;
   border-radius: 4px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text {
+  flex: 1;
   position: relative;
   height: 85px;
   padding: 0 6px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-align-content: space-between;
-          align-content: space-between;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  align-content: space-between;
+  flex-direction: column;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-title {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-title {
   font-size: 16px;
   color: #555555;
   height: 21px;
   font-weight: bold;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-descripe {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-descripe {
   font-size: 12px;
   color: #999999;
   margin-top: 5px;
   height: 35px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box {
   height: 24px;
   font-weight: bold;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  flex-direction: row;
+  align-items: flex-end;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .symbol {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .symbol {
   color: #ff582b;
   font-size: 12px;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .m-price {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .m-price {
   position: relative;
   top: 2px;
   font-size: 18px;
   color: #ff582b;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .m-old-price {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-price-box .m-old-price {
   margin-left: 3px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   font-size: 10px;
   color: #999999;
   margin-top: 5rpx;
   text-decoration: line-through;
   font-weight: normal;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-distance {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-distance {
   position: absolute;
   right: 0;
   bottom: -4px;
@@ -496,7 +412,7 @@ page {
   font-size: 20rpx;
   text-align: right;
 }
-.hx-store .main #mainSwiper .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-distance .jumpPosition {
+.hx-store .main .scroll-items .category-list .right .goodsListBox .category .list .box .m-store-item .m-text .m-distance .jumpPosition {
   position: absolute;
   bottom: 23px;
   right: 0;
@@ -504,59 +420,41 @@ page {
   width: 28px;
   height: 28px;
 }
-.hx-store .main #mainSwiper .business-box .info-list {
+.hx-store .main .business-box .info-list {
   background: #ffffff;
   padding: 0 15px;
 }
-.hx-store .main #mainSwiper .business-box .info-list-container {
+.hx-store .main .business-box .info-list-container {
   line-height: 46px;
   height: 46px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
 }
-.hx-store .main #mainSwiper .business-box .info-list-container [class*="hxicon-"] {
+.hx-store .main .business-box .info-list-container [class*="hxicon-"] {
   color: #a2a2a2;
   margin-right: 8px;
 }
-.hx-store .main #mainSwiper .business-box .info-list-container text {
+.hx-store .main .business-box .info-list-container text {
   font-size: 14px;
 }
-.hx-store .main #mainSwiper .business-box .info-list-container .right {
+.hx-store .main .business-box .info-list-container .right {
   float: right;
   color: #dddddd;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: row;
+  align-items: center;
 }
-.hx-store .main #mainSwiper .business-box .info-list-container .right [class*="hxicon-"] {
+.hx-store .main .business-box .info-list-container .right [class*="hxicon-"] {
   color: #dddddd;
   margin-right: 0;
   font-size: 16px;
 }
 .hx-store .foot {
   position: fixed;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   z-index: 999;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   bottom: 0;
   height: 100%;
   width: 100%;
@@ -564,16 +462,10 @@ page {
 }
 .hx-store .foot .btn-box {
   position: absolute;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   bottom: 15px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   height: 50px;
   width: calc(100% - 32px);
@@ -586,31 +478,19 @@ page {
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 9px;
   padding-left: 6rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-align-self: center;
-          align-self: center;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
   width: 70px;
   height: 100%;
   color: #f6d200;
   text-align: center;
 }
 .hx-store .foot .btn-box-left .imgBox {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   text-align: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
+  justify-content: center;
 }
 .hx-store .foot .btn-box-left .imgBox image {
   width: 20px;
@@ -626,20 +506,11 @@ page {
 }
 .hx-store .foot .btn-box-center {
   height: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-          flex: auto;
-  display: -webkit-box;
-  display: -webkit-flex;
+  flex: auto;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-  -webkit-align-self: center;
-          align-self: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: flex-start;
+  align-self: center;
+  align-items: center;
   background: #222222;
   border-top-left-radius: 8rpx;
   border-bottom-left-radius: 8rpx;
@@ -669,25 +540,16 @@ page {
   line-height: 18px;
 }
 .hx-store .foot .btn-box-center .priceBox {
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-          flex: auto;
+  flex: auto;
 }
 .hx-store .foot .btn-box-right {
   width: 70px;
   height: 100%;
   position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-  -webkit-align-self: center;
-          align-self: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: flex-start;
+  align-self: center;
+  align-items: center;
 }
 .hx-store .foot .btn-box-right .pscj {
   width: 100%;
@@ -696,17 +558,10 @@ page {
   border-bottom-right-radius: 100rpx;
   background: #222222;
   text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-align-self: center;
-          align-self: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
 }
 .hx-store .foot .btn-box-right .jiesuan {
   width: 100%;
@@ -715,18 +570,10 @@ page {
   border-top-right-radius: 100rpx;
   border-bottom-right-radius: 100rpx;
   text-align: center;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-align-self: center;
-          align-self: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  background: -webkit-linear-gradient(45deg, #FFEB3B, #FFC107);
+  justify-content: center;
+  align-self: center;
+  align-items: center;
   background: linear-gradient(45deg, #FFEB3B, #FFC107);
   font-weight: bold;
   color: #222222;
@@ -741,16 +588,9 @@ page {
   z-index: 1;
 }
 .hx-store .foot .cart-box {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
-          justify-content: flex-start;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-flow: column;
-          flex-flow: column;
+  justify-content: flex-start;
+  flex-flow: column;
   background: #ffffff;
   position: absolute;
   bottom: 0;
@@ -780,36 +620,20 @@ page {
   height: 40px;
   border-bottom: 1px solid #f6f6f6;
   color: #666666;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
 }
 .hx-store .foot .cart-box .operating-box_right {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 .hx-store .foot .cart-box .operating-box_left {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
 }
 .hx-store .foot .cart-box .goods-box {
   height: 100%;
   overflow: hidden;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
+  flex: 1;
   display: flex;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll {
@@ -817,11 +641,8 @@ page {
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list {
   width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box {
   width: 100%;
@@ -830,47 +651,28 @@ page {
   padding: 0 16px;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   width: 100%;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  justify-content: space-between;
+  align-items: flex-end;
   padding-top: 15px;
   padding-bottom: 15px;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-img {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 85px;
-          flex: 0 0 85px;
+  flex: 0 0 85px;
   height: 85px;
   background: #eee;
   border-radius: 4px;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-text {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
   position: relative;
   height: 85px;
   padding: 0 6px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-align-content: space-between;
-          align-content: space-between;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  align-content: space-between;
+  flex-direction: column;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-text .m-title {
   font-size: 16px;
@@ -887,16 +689,9 @@ page {
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-text .m-price-box {
   height: 24px;
   font-weight: bold;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: end;
-  -webkit-align-items: flex-end;
-          align-items: flex-end;
+  flex-direction: row;
+  align-items: flex-end;
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-text .m-price-box .symbol {
   color: #ff582b;
@@ -910,13 +705,8 @@ page {
 }
 .hx-store .foot .cart-box .goods-box .goods-list-scroll .goods-list .box .m-store-item .m-text .m-price-box .m-old-price {
   margin-left: 3px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   font-size: 10px;
   color: #999999;
   margin-top: 5rpx;
@@ -941,29 +731,15 @@ page {
   height: 28px;
 }
 .form-main {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-          justify-content: left;
+  flex-direction: column;
+  justify-content: left;
   padding: 15px;
 }
 .form-main .form-main_ctn {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-          justify-content: left;
+  flex-direction: column;
+  justify-content: left;
   padding: 23px 22px 22px 22px;
   background-color: #fff;
   border-radius: 8px;
@@ -983,15 +759,9 @@ page {
 }
 .form-main .form-main_ctn .gg_box {
   margin-top: 8px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
   font-size: 12;
   color: #333;
 }
@@ -1011,27 +781,14 @@ page {
   padding: 6px 12px;
   color: #999;
   background-color: #f9f9f9;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
 }
 .form-main .form-main_ctn .select_gg .select_gg_box {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -webkit-flex;
+  flex: 1;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .form-main .form-main_ctn .select_gg .select_gg_box .gg-item {
   color: #333;
@@ -1045,19 +802,12 @@ page {
 }
 .form-main .form-main_ctn .bottom {
   position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   margin-top: 12px;
 }
 .form-main .form-main_ctn .bottom .price_box {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex: 1;
   lign-items: baseline;
   color: #ff582b;
   font-size: 14px;
@@ -1080,14 +830,10 @@ page {
   border-radius: 50px;
   background-color: #ffce3c;
   padding: 0 12px;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
   height: 30px;
   line-height: 30px;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .form-main .form-main_ctn .bottom .form-btn-box .add-btn ._i {
   font-weight: bold;

@@ -23,15 +23,9 @@
 }
 .navRight.data-v-7c3bb61c{
 		height: 100%;
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
-		-webkit-box-pack: center;
-		-webkit-justify-content: center;
-		        justify-content: center;
-		-webkit-box-align: center;
-		-webkit-align-items: center;
-		        align-items: center;
+		justify-content: center;
+		align-items: center;
 		margin-right: 10rpx;
 }
 .nextBtn.data-v-7c3bb61c{
@@ -69,14 +63,9 @@
         text-align: left;
 }
 .flex-box.data-v-7c3bb61c {
-        display: -webkit-box;
-        display: -webkit-flex;
         display: flex;
-        -webkit-box-pack: center;
-        -webkit-justify-content: center;
-                justify-content: center;
-        -webkit-flex-wrap: wrap;
-                flex-wrap: wrap;
+        justify-content: center;
+        flex-wrap: wrap;
         position: relative;
 		 text-align: center;
 }

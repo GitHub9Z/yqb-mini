@@ -30,7 +30,8 @@
     "pages/order/pay",
     "pages/search/search",
     "pages/user/coupon/coupon",
-    "pages/map/location"
+    "pages/map/location",
+    "pages/promise/promise"
   ],
   "subPackages": [],
   "window": {
@@ -73,6 +74,8 @@
       "desc": "为了能够精准配送到家，提升服务质量"
     }
   },
-  "usingComponents": {},
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
+  },
   "sitemapLocation": "sitemap.json"
 }

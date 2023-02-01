@@ -1,690 +1,312 @@
 <template>
-	<view>
-		<view class="head-box bg-red">
-			<view class="navbar" :style="'height: ' + statusBarHeight"></view>
-			<view class="head-box-main">
-					<image class="head-box-main-logo" src="/static/img/logo.jpg" mode="aspectFill"></image>
-					<view class="head-box-main-divider"></view>
-					<view class="head-box-main-title">易签多</view>
-			</view>
-		</view>
-		<view class="search-box" :class="{'QZBG':GDHEAD}" :style="GDHEAD ? 'padding-right: ' + MPPR + 'px' : ''">
-			<view class="navbar" ></view>
-			<view class="ctn">
-				<view class="hx-search-box" @click="goSearch">
-				    <uni-icons type="search" size="22" color="#666666" />
-				    <text>输入搜索关键词</text>
+	<view class="content">
+		<view class="content-head fixed">
+			<cu-custom :isBack="true" bgColor="bg-red text-white">
+				<block slot="backText">返回</block>
+				<block slot="content">{{page_data.admin_info.user_name || '发现'}}</block>
+			</cu-custom>
+			<view class="cu-bar bg-white search" style="width: 100vw;">
+				<view class="search-form radius">
+					<text class="cuIcon-search"></text>
+					<input v-model="page_status.key_word" :adjust-position="false" type="text" placeholder="请输入搜索关键词" confirm-type="search"></input>
+				</view>
+				<view class="action" @click="page_status.next_page = 0; handleSearchClick()">
+					<!-- <text class="cuIcon-search"></text> -->
+					<text>搜索</text>
 				</view>
 			</view>
 		</view>
-		<view class="container">
-			<view class="hot-box">
-				<text class="item" v-for="(item,i) in hos_list" :key="i">{{item}}</text>
-			</view>
-		</view>
-		<mescroll-body ref="mescrollRef" :down="downOption" @down="downCallback" @up="upCallback">
+		<view class="content-main" :style="{ 'padding-top': `${get_system_info.custom_bar + 100}px` }">
+			<template v-if="page_data.user_list.length > 0">
+				<view class="cu-card dynamic">
+					<view class="cu-item shadow" @click="handleItemClick(user)" v-for="user in page_data.user_list">
+						<view class="padding-sm solid-bottom bg-red text-white">
 
-		<view class="container menu-box" >
-			<view class="item-box" v-for="(item,i) in menuList" :key="i">
-				<image :src="item.img" mode=""></image>
-				<view class="tit">
-					<text>{{item.tit}}</text>
-				</view>
-			</view>
-		</view>
-		<view class=" bannerimg-box">
-			<swiper  circular duration="400" interval="10000" autoplay >
-				<swiper-item class="swiper-item bannerImg" v-for="(item,index) in bannerData" :key="index">
-					<!-- 图片尺寸为 750*250 -->
-					<image :src="item.src" class="loaded" mode="aspectFill"></image>
-				</swiper-item>
-			</swiper>
-		</view>
-		
-		<view class="container margin-top sort-box">
-			<view class="item-box" v-for="(item,i) in sortList" :key="i">
-				<view class="tit" :class="{'active': sortIndex == i}">
-					<text>{{item.tit}}</text>
-				</view>
-			</view>
-		</view>
-		<view class=" store-box" v-if="storeList">
-			<view class=" item-box" v-for="(store,i) in storeList" :key="i">
-				<view class="container top-box">
-					<view class="left" @click="toStore(store,null)">
-						<image :src="store.avatar" mode="aspectFill"></image>
-					</view>
-					<view class="right" @click="toStore(store,null)">
-						
-						<text class="tit" >{{store.name}}</text>
-						<view class="row justify-content">
-							<view class="row-left">
-								<i class="hxicon-favorfill "></i>
-								<text class="t1">{{store.mark}}</text>
-								<text class="t2">1349人已签约</text>
-							</view>
-							<view class="row-right">
-								<i class="hxicon-locationfill"></i>
-								<text>{{store.distance}}</text>
+							<view class="action" v-if="user.admin">
+								<text class="cuIcon-title text-white"></text>
+								<text>{{user.admin.user_name}}</text>
 							</view>
 						</view>
-						<view class="row">
-							<text >最近门店 - {{store.community}}</text>
+						<view class="padding padding-bottom-sm" v-if="user.tag">
+							<view class="text-gray text-sm flex flex-wrap">
+								<view class='cu-tag' :class="'line-' + page_config.color_config[index]" style="margin: 0 10rpx 10rpx 0" v-for="(tag, index) in user.tag">{{tag}}</view>
+							</view>
 						</view>
-						<!-- <view class="row">
-							
-						</view> -->
+						<view class="text-content">
+							<text class="text-content text-df">{{user.introduction}}</text>
+						</view>
+						<view class="grid flex-sub padding-lr col-1" v-if="user.imgList">
+							<view class="bg-img only-img" :style="'background-image:url(' + user.imgList[0] + ')'"></view>
+						</view>
+						<view class="text-gray text-sm padding" style="display: flex; align-items: center; line-height: 20px;">
+							<view style="flex: 1; display: flex;">
+								<image :src="user.avatar_url || 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201912%2F25%2F20191225224833_zloky.thumb.400_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623481033&t=2492609cde122393a99b4af1a177bf8d'"
+								 mode="aspectFill" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 10px;"></image>
+								<text style="color: #333333">{{user.user_name}}</text>
+								<text style="margin-left: 10px;">活跃于{{getDateDiff(user.update_time)}}</text>
+							</view>
+							<text class="cuIcon-attentionfill margin-lr-xs"></text>{{user.hot || 0}}
+						</view>
 					</view>
 				</view>
-				<scroll-view scroll-x  class="bottom-box">
-					<view class="bottom-box-container">
-						<view class="goods-box" v-for="(goods,j) in store.goods" :key="j" @click="toStore(store,goods.id)">
-<!-- 							<view class="img-box">
-								<image :src="goods.main_pic" mode="aspectFit"></image>
-								<view class="tag">
-									立即到账
-								</view>
-							</view> -->
-							<view class="tit">
-								{{goods.name}}
-							</view>
-							<view class="hint">
-								消费{{goods.sum}}
-							</view>
-							<view class="price-box">
-								<text class="txt1">￥</text>
-								<text class="txt2">{{goods.bonus}}</text>
-								<text class="txt3">/{{goods.type}}</text>
-							</view>
-						</view>
-					</view>
-					
-				</scroll-view>
-			</view>
+			</template>
+			<empty text="暂无符合条件的商家" v-else></empty>
 		</view>
-		</mescroll-body>
-		<view class="foot" v-if="showFoot">
-			<text>更多商家加入中，敬请期待</text>
-		</view>
-		<view class="footzw"></view>
 	</view>
-	
 </template>
 
 <script>
-	import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
-	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
-	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
-	
-	//引入测试数据
-	import testData from "@/common/testdata.js";
-	const screenHeight = uni.getSystemInfoSync().screenHeight;
-	//获取系统状态栏高度
-	const statusBarHeight = uni.getSystemInfoSync().statusBarHeight  + 'px';
+	import {
+		mapState,
+		mapGetters,
+		mapActions,
+		mapMutations
+	} from 'vuex'
+	import Empty from '../../components/empty.vue'
 	export default {
-		mixins: [MescrollMixin], 
-		components:{
-			MescrollBody
-		},
-		onPageScroll(e){
-			let that= this;
-			if(e.scrollTop>10){
-				let view = uni.createSelectorQuery().select(".search-box");
-				view.fields({
-					rect: true
-				}, res => {
-					if(res.top == 0){
-						that.GDHEAD = 1;
-					}else{
-						that.GDHEAD = 0;
-					}
-					
-				}).exec();
-			}
-			
+		components: {
+			Empty
 		},
 		data() {
 			return {
-				statusBarHeight,
-				MPPR: 0,
-				GDHEAD: 0,
-				//显示没有更多商户
-				showFoot: 0, 
-				downOption: {
-					auto: false //是否在初始化后,自动执行downCallback; 默认true
+				page_config: {
+					page_size: 5,
+					color_config: ['red', 'orange', 'yellow', 'olive', 'green', 'cyan', 'blue', 'purple', 'mauve', 'pink', 'brown',
+						'grey', 'gray'
+					],
 				},
-				menuList: [
-					
-					{
-						img: '/static/img/index/cs.png',
-						tit: '超市百货'
-					},
-					{
-						img: '/static/img/index/sc.png',
-						tit: '绿色果蔬'
-					},
-					{
-						img: '/static/img/index/sg.png',
-						tit: '生鲜鱼肉'
-					},
-					{
-						img: '/static/img/index/xh.png',
-						tit: '鲜花礼品'
-					},
-					{
-						img: '/static/img/index/yd.png',
-						tit: '送药到家'
-					}
-				],
-				sortIndex: 0,
-				sortList: [{tit:'附近商户'}, {tit:'销量'}, {tit:'速度'}, {tit:'配送费'}],
-				//filterTagList: [{tit:'支持预定'}, {tit:'销量'}, {tit:'速度'}, {tit:'配送费'}] 
-				storeList: [],
-				bannerData:[
-					{page: '/pages/product/product?id=457', src: 'https://img0.baidu.com/it/u=3288149204,2595002920&fm=253&fmt=auto&app=138&f=JPEG?w=1134&h=332'},
-					{page: '/pages/product/product?id=57', src:'https://img.zcool.cn/community/015b316045ea1c11013ef90fe5987b.jpg@1280w_1l_2o_100sh.jpg'},
-					{page: '/pages/product/product?id=95', src:'https://img.zcool.cn/community/017d5b5b84a9b1a8012190f2ed83b4.jpg@1280w_1l_2o_100sh.jpg'},
-					{page: '/pages/product/product?id=45', src:'https://marketplace.canva.cn/EAD5sa8t-14/3/0/1600w/canva-%E8%A4%90%E7%BA%A2%E8%89%B2%E7%83%A7%E7%83%A4%E7%85%A7%E7%89%87%E9%A4%90%E9%A5%AE%E4%BF%83%E9%94%80%E4%B8%AD%E6%96%87%E7%94%B5%E5%95%86banner-J8rucfd0uKs.jpg'}
-				],
-				hos_list:[
-					'红烧排骨',
-					'飞过肉',
-					'野生大菠萝',
-					'红烧排骨',
-					'西红柿蛋汤'
-				]
-				
+				page_status: {
+					key_word: '',
+					next_page: 0,
+					stature_sort: true,
+					age_sort: true
+				},
+				page_data: {
+					user_list: [],
+					admin_info: {},
+					doing: 'list'
+				}
 			}
 		},
-		onLoad() {
-			let that = this;
-			// #ifdef MP
-			//小程序下空出胶囊距离
-			let m = uni.getMenuButtonBoundingClientRect();
-			that.MPPR = m.width + 8
-			
-			// #endif
+		onLoad({
+			invite_id
+		}) {
+			if (invite_id) this.page_status.invite_id = invite_id
 		},
-		mounted() {
-			let that = this;
-			
+		onPullDownRefresh() {
+			this.page_status.next_page = 0
+			console.log('--------下拉刷新-------')
+			uni.showNavigationBarLoading() //在标题栏中显示加载
+			uni.stopPullDownRefresh()
+			if (this.page_status.invite_id) this.fetchAdminInfo()
+			this.handleSearchClick()
+		},
+		onReachBottom() {
+			console.log('--------上滑更多-------')
+			uni.showNavigationBarLoading() //在标题栏中显示加载
+			this.handleSearchClick()
+		},
+		onShow() {
+			if (this.page_status.doing === 'detail') {
+				this.page_status.doing = 'list'
+				return
+			}
+			this.page_status.next_page = 0
+			if (this.page_status.invite_id) this.fetchAdminInfo()
+			this.handleSearchClick()
+		},
+		onReady() {
+			uni.hideLoading()
+		},
+		computed: {
+			...mapGetters(['get_system_info', 'get_user_info', 'get_find_condition']),
+			condition_num() {
+				console.log('heihe', this.get_find_condition)
+				let num = 0
+				let _c = this.get_find_condition
+				if (_c.genderIndex > 0) num++
+				if (_c.educationIndex > 0) num++
+				if (_c.marriageIndex > 0) num++
+				if (_c.ageMultiIndex && (_c.ageMultiIndex[0] != 0 || _c.ageMultiIndex[1] != 0)) num++
+				if (_c.statureMultiIndex && (_c.statureMultiIndex[0] != 0 || _c.statureMultiIndex[1] != 0)) num++
+				if (_c.bornPool && _c.bornPool.length > 0) num++
+				if (_c.livePool && _c.livePool.length > 0) num++
+				return num
+			}
 		},
 		methods: {
-			/*下拉刷新的回调 */
-			downCallback() {
-				let that = this;
-				//联网成功的回调,隐藏下拉刷新的状态
-				that.mescroll.endSuccess();
-				// setTimeout(()=>{
-				// 	that.mescroll.endSuccess();
-				// },1500)
-				//联网失败的回调,隐藏下拉刷新的状态
-				//this.mescroll.endErr();
-				
+			fetchAdminInfo() {
+				uni.request({
+					url: 'https://www.imgker.com/venus/user/get_admin_info', //仅为示例，并非真实接口地址。
+					data: {
+						invite_id: this.page_status.invite_id
+					},
+					header: {
+						'custom-header': 'hello' //自定义请求头信息
+					},
+					success: (res) => {
+						this.page_data.admin_info = res.data
+						this.$forceUpdate()
+					}
+				})
 			},
-			upCallback(page) {
-				let that = this;
-				//加载门店数据
-				that.storeList = testData.storeList;
-				//无更多商家
-				that.showFoot = true;
-				//隐藏加载
-				that.mescroll.endSuccess(10);
-				// setTimeout(()=>{
-				// 	//加载门店数据
-				// 	that.storeList = testData.storeList;
-				// 	//无更多商家
-				// 	that.showFoot = true;
-				// 	//隐藏加载
-				// 	that.mescroll.endSuccess(10);
-				// },1500)
+			handleItemClick(user) {
+				this.page_status.doing = 'detail'
+				uni.navigateTo({
+					url: `./detail?user_id=${user.user_id}`
+				})
 			},
-			toStore(store,goodsID){
-				let store_id = store.store_id
-				let parameter = `?sid=${store_id}`
-				
-				if(goodsID != null){
-					parameter += `&gid=${goodsID}`
+			handleSearchClick() {
+				if (this.page_status.next_page === 0) {
+					this.page_data.user_list = []
 				}
-				uni.navigateTo({
-					url: '/pages/store/index' + parameter
+				uni.request({
+					url: 'https://www.imgker.com/venus/user/find_users', //仅为示例，并非真实接口地址。
+					data: {
+						keyword: this.page_status.key_word,
+						inviteId: this.page_status.invite_id || '',
+						condition: JSON.stringify(this.get_find_condition),
+						ageSort: this.page_status.age_sort,
+						statureSort: this.page_status.stature_sort,
+						pageNo: this.page_status.next_page,
+						pageSize: this.page_config.page_size
+					},
+					header: {
+						'custom-header': 'hello' //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.data.length === this.page_config.page_size) {
+							this.page_status.next_page ++
+						}
+						this.page_data.user_list = [
+							...this.page_data.user_list,
+							...res.data.map(_i => {
+								let user_id = _i.user_id
+								let admin = _i.admin
+								let avatar_url = _i.avatar_url
+								let user_name = _i.user_name
+								let hot = _i.hot
+								let update_time = _i.update_time
+								_i = JSON.parse(_i.user_info)
+								_i.user_id = user_id
+								_i.admin = admin
+								_i.avatar_url = avatar_url
+								_i.user_name = user_name
+								_i.hot = hot
+								_i.update_time = update_time
+								let [b_province_index, b_city_index, b_area_index] = _i.bornMultiIndex || []
+								let [l_province_index, l_city_index, l_area_index] = _i.liveMultiIndex || []
+								_i.tag = [
+									_i.gender ? ['男', '女'][_i.gender] : null,
+									_i.date ? _i.date[2] + _i.date[3] + '年' : null,
+									_i.bornMultiIndex ? `${areaJson[b_province_index].city[b_city_index].area[b_area_index]}` : null,
+									_i.liveMultiIndex ? `${areaJson[l_province_index].city[l_city_index].area[l_area_index]}工作` : null,
+									..._i.hobby
+								].filter(_i => _i)
+								return _i
+							}).filter(_i => this.page_data.user_list.every(__i => __i.user_id !== _i.user_id))
+						]
+					}
 				})
 			},
-			//搜索
-			goSearch(){
+			handleConditionClick() {
 				uni.navigateTo({
-					url: '/pages/search/search?type=home'
+					url: './findcond'
 				})
+			},
+			handleStatureSortClick() {
+				this.page_status.next_page = 0
+				this.page_status.stature_sort = !this.page_status.stature_sort
+				this.handleSearchClick()
+			},
+			handleAgeSortClick() {
+				this.page_status.next_page = 0
+				this.page_status.age_sort = !this.page_status.age_sort
+				this.handleSearchClick()
 			}
-		}
+		},
 	}
 </script>
 
-<style lang="scss">
-	
-page{
-	background-color: #f8f8f8;
-}
-.b-b{
-	position: relative;
-}
- .b-b:after,
- .b-t:after {
- 	position: absolute;
- 	z-index: 3;
- 	left: 0;
- 	right: 0;
- 	height: 0;
- 	content: '';
- 	transform: scaleY(.5);
- 	border-bottom: 1px solid #E4E7ED;
- }
- 
- .b-b:after {
- 	bottom: 0;
- }
- .b-t:after {
- 	top: 0;
- }
-.container{
-	margin: 0 15px;
-}
-.margin-top{
-	margin-top: 12px;
-}
-.head-box{
-	padding: 14px 0;
-	/* #ifdef MP */
-	padding-top:2px;
-	/* #endif */
-	position: relative;
-	z-index: 3;
-	.navbar{
-		position: sticky;
-		top: 0;
-		height: var(--status-bar-height);
-	}
-	
-	.head-box-main{
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		height: 32px;
-		align-items: center;
-		transform: scale(.7);
-
-			.head-box-main-logo {
-				position: absolute;
-				left: 21%;
-				top: 0;
-				bottom: 0;
-				margin: auto;
-				//border: 1px solid white;
-				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
-				height: 30px;
-				width: 80px;
-				background-size: 100% 100% !important;
-				// border-radius: 50%;
-			}
-			
-			.head-box-main-divider {
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 0;
-				margin: auto;
-				//border: 1px solid white;
-				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
-				height: 28px;
-				width: 1px;
+<style lang="less" scoped>
+	.content {
+		.content-head {
+			.content-head-console {
+				display: flex;
+				align-items: center;
+				padding: 10px;
 				background-color: white;
-				background-size: 100% 100% !important;
-				// border-radius: 50%;
-			}
-			
-			.head-box-main-title {
-				position: absolute;
-				color: white;
-				font-size: 20px;
-				line-height: 28px;
-				right: 22%;
-				top: 0;
-				bottom: 0;
-				margin: auto;
-				//border: 1px solid white;
-				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
-				height: 28px;
-				width: 80px;
-				background-size: 100% 100% !important;
-				// border-radius: 50%;
-			}
+				font-size: 14px;
+				color: #606266;
+				border-top: 1px solid #ebebeb;
+				text-align: center;
+				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
-	}
-	
-}
-.search-box{
-	position: sticky;
-	top: 0;
-	z-index: 2;
-	background: #e54d42;
-	padding-top: var(--status-bar-height);
-	margin-top: calc(var(--status-bar-height) * -1);
-	.ctn{
-		border-top-left-radius:30upx;
-		border-top-right-radius:30upx;
-		background: #f8f8f8;
-		padding: 15px 15px 12px;
-		
-		.hx-search-box{
-			border-radius: 40px;
-			padding: 0 15px;
-			height: 34px;
-			display: flex;
-			align-items: center;
-			line-height: 44rpx;
-			background-color: #eeeeee;
-			flex:1;
-			color: #888888;
-			font-size: 14px;
+				.content-head-console-sort {
+					flex: 1;
+					border-right: 1px solid #ebebeb;
+				}
+
+				.content-head-console-age {
+					flex: 1;
+					border-right: 1px solid #ebebeb;
+				}
+
+				.content-head-console-cond {
+					flex: 1
+				}
+			}
 		}
-	}	
-}
-.QZBG{
-	background:#ffffff;
-	box-shadow: 0 1px 6px #ccc;
-	.navbar{
-		height: var(--status-bar-height);
+
+		.content-main {
+			overflow: hidden;
+		}
 	}
-	.ctn{
-		background:#ffffff;
-		/* #ifdef MP */
-		padding-top:0px;
-		/* #endif */
+
+	.fixed {
+		position: fixed;
+		z-index: 99;
 	}
-}
-.hot-box{
-	
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-start;
-	.item{
-		margin-right: 12px;
-		background-color: #EEEEEE;
-		color: #666666;
-		font-size: 12px;
-		border-radius: 20px;
-		padding: 2px 6px;
-		margin-bottom: 8px;
+
+	.VerticalNav.nav {
+		width: 200upx;
+		white-space: initial;
 	}
-	.item:last-child{
-		margin-right: 0;
-	}
-}
-.bannerimg-box{
-	border-bottom-left-radius:10upx;
-	border-bottom-right-radius:10upx;
-	padding: 24rpx;
-	swiper{
-		height: 233rpx;
-		width: 699rpx;
-	}
-	.swiper-item {
-		
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		overflow: hidden;
-		
+
+	.VerticalNav.nav .cu-item {
 		width: 100%;
-		height: 100%;
-		image {
-			border-radius: 8px;
-			width: 100%;
-			// object-fit: cover;
-		}
-	}
-	
-}
-
-.menu-box{
-	
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-top: 12px;
-	border-radius: 8px;
-	background: #ffffff;
-	padding: 12px 8px;
-	.item-box{
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		image{
-			width: 40px;
-			height: 40px;
-		}
-		.tit{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 12px;
-			margin-top: 6px;
-			color: #333333;
-			padding: 2px 0;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-		.active{
-			color: #ffffff;
-			background-color: #999999;
-			border-radius: 60px;
-		}
-	}
-}
-.sort-box{
-	display: flex;
-	flex-direction: row;
-	margin-top: 12px;
-	.item-box{
-		
-		margin-right: 16px;
-		.tit{
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 12px;
-			color: #333333;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-		.active{
-			//color: #111111;
-			font-weight: bold;
-		}
-	}
-}
-.store-box{
-	margin-top: 20px;
-	
-	.item-box{
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 14px;
-		padding-bottom: 18px;
-		padding-top: 18px;
-		background-color: #ffffff;
-		.top-box{
-			display: flex;
-			flex-direction: row;
-			.left{
-				margin-right: 10px;
-				
-				
-				image{
-					width: 72px;
-					height: 54px;
-					border-radius: 6px;
-				}
-			}
-			.right{
-				flex: 1;
-				.tit{
-					font-size: 16px;
-					font-weight: bold;
-					color: #333333;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-				.justify-content{
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-				}
-				.row{
-					font-size: 12px;
-					color: #999999;
-					margin-top: 4px;
-					.row-left{
-						display: flex;
-						flex-direction: row;
-						.t1,i{
-							color: #ffca3e;
-						}
-						
-					}
-					.t2{
-						margin-left: 12px;
-					}
-					.row-right{
-						display: flex;
-						flex-direction: row;
-						i{
-							margin-right: 4px;
-						}
-					}
-					
-				}
-			}
-		}
-		.bottom-box{
-			&-container{
-				margin: 12px 0 0;
-				padding-left: 82px;
-				
-				white-space: nowrap;
-				.goods-box{
-					width: 90%;
-					margin-left: 12px;
-					display: flex;
-					align-items: flex-end;
-					// display: inline-block;
-					.img-box{
-						position: relative;
-						width: 80px;
-						height: 60px;
-						background-color: #f1f1f1;
-						border-radius: 4px;
-						image{
-							width: 100%;
-							height: 60px;
-						}
-						.tag{
-							position: absolute;
-							bottom: 0;
-							left: 0;
-							background-color: #FF5722;
-							color: #ffffff;
-							padding: 2px 4px;
-							font-size: 12px;
-							border-radius: 4px;
-						}
-					}
-					.tit{
-						
-						font-size: 14px;
-						margin-top: 4px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-					.hint{
-						flex: 1;
-						margin-left: 5px;
-						font-size: 12px;
-						margin-top: 4px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						color: #9b9e9e;
-					}
-					.price-box{
-						margin-top: 4px;
-						.txt1{
-							font-size: 10px;
-							color: #FF5722;
-						}
-						.txt2{
-							font-size: 16px;
-							color: #FF5722;
-						}
-						.txt3{
-							margin-left: 6px;
-							font-size: 10px;
-							color: #bbbbbb;
-							// text-decoration: line-through;
-						}
-					}
-				}
-				.goods-box:last-child{
-					margin-right: 12px;
-				}
-				
-			}
-			
-		}
-	}
-	.item-box:last-child{
-		border-bottom: 0;
-	}
-}
-.foot{
-	position: relative;
-	display: flex;
-	justify-content: center;
-	margin-top: 36px;
-	margin-bottom: 50px;
-	text{
-		font-size: 14px;
+		text-align: center;
+		background-color: #fff;
+		margin: 0;
+		border: none;
+		height: 50px;
+		line-height: 50px;
 		position: relative;
-		z-index: 2;
-		height: 20px;
-		line-height: 20px;
-		background-color: #f8f8f8;
-		color: #cccccc;
-		padding: 0 12px;
 	}
-}
-.foot::before{
-	content: "";
-	z-index: 1;
-	display: block;
-	position: absolute;
-	top: 50%;
-	height: 0;
-	width: 100%;
-	transform: scaleY(0.5);
-	border-bottom: 1px solid #E4E7ED;
-}
-.footzw{
-	/* #ifdef H5*/
-	height: 50px;
-	/* #endif */
-}
 
+	.VerticalNav.nav .cu-item.cur {
+		background-color: #f1f1f1;
+	}
+
+	.VerticalNav.nav .cu-item.cur::after {
+		content: "";
+		width: 8upx;
+		height: 30upx;
+		border-radius: 10upx 0 0 10upx;
+		position: absolute;
+		background-color: currentColor;
+		top: 0;
+		right: 0upx;
+		bottom: 0;
+		margin: auto;
+	}
+
+	.VerticalBox {
+		display: flex;
+	}
+
+	.VerticalMain {
+		background-color: #f1f1f1;
+		flex: 1;
+	}
 </style>

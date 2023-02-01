@@ -34,48 +34,28 @@
   position: relative;
 }
 .list-box {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   background-color: #fff;
   border-radius: 10px;
   overflow: hidden;
   margin: 0 15px;
 }
 .list {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   padding: 14px 15px;
   background: #fff;
   position: relative;
 }
 .wrapper {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-          flex: 1;
+  flex-direction: column;
+  flex: 1;
 }
 .address-box {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
 }
 .address-box .tag {
   font-size: 24rpx;
@@ -100,12 +80,8 @@
   margin-right: 30rpx;
 }
 .icon-edit {
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  align-items: center;
   height: 80rpx;
   font-size: 40rpx;
   color: #909399;
@@ -113,19 +89,10 @@
 }
 .add-btn {
   position: fixed;
-  display: -webkit-box;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
   overflow: hidden;
   bottom: 15px;
@@ -135,7 +102,6 @@
   font-size: 16px;
   font-weight: bold;
   color: #333;
-  background: -webkit-linear-gradient(45deg, #ffd900, #ffc107);
   background: linear-gradient(45deg, #ffd900, #ffc107);
 }
 

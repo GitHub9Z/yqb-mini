@@ -1,28 +1,15 @@
 <template>
 	<view>
-		<view class="head-box" >
-			<view class="navbar"></view>
-			<view class="container">
-				<view class="left">
-					<view class="logo">
-						<image src="../../static/img/logo96x96.png" mode="aspectFit"></image>
-					</view>
-				</view>
-				<view class="right" :style="'padding-right: ' + MPPR + 'px'">
-					<view class="address-box">
-						<i class="hxicon-locationfill"></i>
-						<text>幸福花园</text>
-						<i class="hxicon-right"></i>
-					</view>
-					<view class="notice">
-						<i class="hxicon-notice"></i>
-					</view>
-				</view>
-				
+		<view class="head-box bg-red">
+			<view class="navbar" :style="'height: ' + statusBarHeight"></view>
+			<view class="head-box-main">
+					<image class="head-box-main-logo" src="/static/img/logo.jpg" mode="aspectFill"></image>
+					<view class="head-box-main-divider"></view>
+					<view class="head-box-main-title">易签多</view>
 			</view>
 		</view>
 		<view class="search-box" :class="{'QZBG':GDHEAD}" :style="GDHEAD ? 'padding-right: ' + MPPR + 'px' : ''">
-			<!-- <view class="navbar" ></view> -->
+			<view class="navbar" ></view>
 			<view class="ctn">
 				<view class="hx-search-box" @click="goSearch">
 				    <uni-icons type="search" size="22" color="#666666" />
@@ -49,7 +36,7 @@
 			<swiper  circular duration="400" interval="10000" autoplay >
 				<swiper-item class="swiper-item bannerImg" v-for="(item,index) in bannerData" :key="index">
 					<!-- 图片尺寸为 750*250 -->
-					<image :src="item.src" class="loaded" mode="widthFix"></image>
+					<image :src="item.src" class="loaded" mode="aspectFill"></image>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -69,12 +56,12 @@
 					</view>
 					<view class="right" @click="toStore(store,null)">
 						
-						<text class="tit" >{{store.name}}（{{store.community}}）</text>
+						<text class="tit" >{{store.name}}</text>
 						<view class="row justify-content">
 							<view class="row-left">
 								<i class="hxicon-favorfill "></i>
 								<text class="t1">{{store.mark}}</text>
-								<text class="t2">月售{{store.monthly_sales}}</text>
+								<text class="t2">1349人已签约</text>
 							</view>
 							<view class="row-right">
 								<i class="hxicon-locationfill"></i>
@@ -82,9 +69,7 @@
 							</view>
 						</view>
 						<view class="row">
-							<text >起送￥{{store.starting_price}}</text>
-							<text class="t2" v-if="store.shipping_dees > 0">配送￥{{store.shipping_dees}} </text>
-							<text class="t2" v-else>免费配送</text>
+							<text >最近门店 - {{store.community}}</text>
 						</view>
 						<!-- <view class="row">
 							
@@ -94,19 +79,22 @@
 				<scroll-view scroll-x  class="bottom-box">
 					<view class="bottom-box-container">
 						<view class="goods-box" v-for="(goods,j) in store.goods" :key="j" @click="toStore(store,goods.id)">
-							<view class="img-box">
+<!-- 							<view class="img-box">
 								<image :src="goods.main_pic" mode="aspectFit"></image>
 								<view class="tag">
-									{{goods.tag}}
+									立即到账
 								</view>
-							</view>
+							</view> -->
 							<view class="tit">
 								{{goods.name}}
 							</view>
+							<view class="hint">
+								消费{{goods.sum}}
+							</view>
 							<view class="price-box">
 								<text class="txt1">￥</text>
-								<text class="txt2">{{goods.price}}</text>
-								<text class="txt3">￥{{goods.old_price}}</text>
+								<text class="txt2">{{goods.bonus}}</text>
+								<text class="txt3">/{{goods.type}}</text>
 							</view>
 						</view>
 					</view>
@@ -131,6 +119,8 @@
 	//引入测试数据
 	import testData from "@/common/testdata.js";
 	const screenHeight = uni.getSystemInfoSync().screenHeight;
+	//获取系统状态栏高度
+	const statusBarHeight = uni.getSystemInfoSync().statusBarHeight  + 'px';
 	export default {
 		mixins: [MescrollMixin], 
 		components:{
@@ -155,6 +145,7 @@
 		},
 		data() {
 			return {
+				statusBarHeight,
 				MPPR: 0,
 				GDHEAD: 0,
 				//显示没有更多商户
@@ -190,10 +181,10 @@
 				//filterTagList: [{tit:'支持预定'}, {tit:'销量'}, {tit:'速度'}, {tit:'配送费'}] 
 				storeList: [],
 				bannerData:[
-					{page: '/pages/product/product?id=457', src: '//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=57', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=95', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'},
-					{page: '/pages/product/product?id=45', src:'//imgs.1op.cn/i/hxshop/banner/banner.jpg'}
+					{page: '/pages/product/product?id=457', src: 'https://img0.baidu.com/it/u=3288149204,2595002920&fm=253&fmt=auto&app=138&f=JPEG?w=1134&h=332'},
+					{page: '/pages/product/product?id=57', src:'https://img.zcool.cn/community/015b316045ea1c11013ef90fe5987b.jpg@1280w_1l_2o_100sh.jpg'},
+					{page: '/pages/product/product?id=95', src:'https://img.zcool.cn/community/017d5b5b84a9b1a8012190f2ed83b4.jpg@1280w_1l_2o_100sh.jpg'},
+					{page: '/pages/product/product?id=45', src:'https://marketplace.canva.cn/EAD5sa8t-14/3/0/1600w/canva-%E8%A4%90%E7%BA%A2%E8%89%B2%E7%83%A7%E7%83%A4%E7%85%A7%E7%89%87%E9%A4%90%E9%A5%AE%E4%BF%83%E9%94%80%E4%B8%AD%E6%96%87%E7%94%B5%E5%95%86banner-J8rucfd0uKs.jpg'}
 				],
 				hos_list:[
 					'红烧排骨',
@@ -306,7 +297,6 @@ page{
 	/* #ifdef MP */
 	padding-top:2px;
 	/* #endif */
-	background: linear-gradient(100deg, #FFEB3B, #FFC107);
 	position: relative;
 	z-index: 3;
 	.navbar{
@@ -315,52 +305,61 @@ page{
 		height: var(--status-bar-height);
 	}
 	
-	.container{
+	.head-box-main{
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		height: 32px;
 		align-items: center;
-		.left{
-			.logo{
-				width: 32px;
-				height: 32px;
-				
-				image{
-					width: 32px;
-					height: 32px;
-					border-radius: 50%;
-				}
-			}
-		}
-		.right{
-			display: flex;
-			flex-direction: row;
-			color: #333333;
-			align-items: center;
-			
-			.address-box{
-				font-size: 14px;
-				margin-right: 16px;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				text{
-					margin-left: 2px;
-					margin-right: 4px;
-				}
-				.icon-right{
-					position: relative;
-					top: 2px;
-				}
+		transform: scale(.7);
+
+			.head-box-main-logo {
+				position: absolute;
+				left: 21%;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				//border: 1px solid white;
+				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
+				height: 30px;
+				width: 80px;
+				background-size: 100% 100% !important;
+				// border-radius: 50%;
 			}
 			
-			.notice{
-				font-weight: bold;
-				font-size: 18px;
+			.head-box-main-divider {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				//border: 1px solid white;
+				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
+				height: 28px;
+				width: 1px;
+				background-color: white;
+				background-size: 100% 100% !important;
+				// border-radius: 50%;
 			}
-		}
-		
+			
+			.head-box-main-title {
+				position: absolute;
+				color: white;
+				font-size: 20px;
+				line-height: 28px;
+				right: 22%;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				//border: 1px solid white;
+				// box-shadow: 0px 2px 12px 0px rgba(255, 255, 255, 1);
+				height: 28px;
+				width: 80px;
+				background-size: 100% 100% !important;
+				// border-radius: 50%;
+			}
+
 	}
 	
 }
@@ -368,12 +367,12 @@ page{
 	position: sticky;
 	top: 0;
 	z-index: 2;
-	background: linear-gradient(100deg, #FFEB3B, #FFC107);
+	background: #e54d42;
 	padding-top: var(--status-bar-height);
 	margin-top: calc(var(--status-bar-height) * -1);
 	.ctn{
-		border-top-left-radius:50upx;
-		border-top-right-radius:50upx;
+		border-top-left-radius:30upx;
+		border-top-right-radius:30upx;
 		background: #f8f8f8;
 		padding: 15px 15px 12px;
 		
@@ -443,7 +442,7 @@ page{
 		image {
 			border-radius: 8px;
 			width: 100%;
-			
+			// object-fit: cover;
 		}
 	}
 	
@@ -580,9 +579,11 @@ page{
 				
 				white-space: nowrap;
 				.goods-box{
-					width: 80px;
+					width: 90%;
 					margin-left: 12px;
-					display: inline-block;
+					display: flex;
+					align-items: flex-end;
+					// display: inline-block;
 					.img-box{
 						position: relative;
 						width: 80px;
@@ -605,11 +606,22 @@ page{
 						}
 					}
 					.tit{
+						
 						font-size: 14px;
 						margin-top: 4px;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
+					}
+					.hint{
+						flex: 1;
+						margin-left: 5px;
+						font-size: 12px;
+						margin-top: 4px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						color: #9b9e9e;
 					}
 					.price-box{
 						margin-top: 4px;
@@ -625,7 +637,7 @@ page{
 							margin-left: 6px;
 							font-size: 10px;
 							color: #bbbbbb;
-							text-decoration: line-through;
+							// text-decoration: line-through;
 						}
 					}
 				}
