@@ -32,7 +32,7 @@
 				</view>
 			</view>
 		</view>
-		<view class=" bannerimg-box">
+		<view class="bannerimg-box">
 			<swiper  circular duration="400" interval="10000" autoplay >
 				<swiper-item class="swiper-item bannerImg" v-for="(item,index) in bannerData" :key="index">
 					<!-- 图片尺寸为 750*250 -->
@@ -49,58 +49,7 @@
 			</view>
 		</view>
 		<view class=" store-box" v-if="storeList">
-			<view class=" item-box" v-for="(store,i) in storeList" :key="i">
-				<view class="container top-box">
-					<view class="left" @click="toStore(store,null)">
-						<image :src="store.avatar" mode="aspectFill"></image>
-					</view>
-					<view class="right" @click="toStore(store,null)">
-						
-						<text class="tit" >{{store.name}}</text>
-						<view class="row justify-content">
-							<view class="row-left">
-								<i class="hxicon-favorfill "></i>
-								<text class="t1">{{store.mark}}</text>
-								<text class="t2">1349人已签约</text>
-							</view>
-							<view class="row-right">
-								<i class="hxicon-locationfill"></i>
-								<text>{{store.distance}}</text>
-							</view>
-						</view>
-						<view class="row">
-							<text >最近门店 - {{store.community}}</text>
-						</view>
-						<!-- <view class="row">
-							
-						</view> -->
-					</view>
-				</view>
-				<scroll-view scroll-x  class="bottom-box">
-					<view class="bottom-box-container">
-						<view class="goods-box" v-for="(goods,j) in store.goods" :key="j" @click="toStore(store,goods.id)">
-<!-- 							<view class="img-box">
-								<image :src="goods.main_pic" mode="aspectFit"></image>
-								<view class="tag">
-									立即到账
-								</view>
-							</view> -->
-							<view class="tit">
-								{{goods.name}}
-							</view>
-							<view class="hint">
-								消费{{goods.sum}}
-							</view>
-							<view class="price-box">
-								<text class="txt1">￥</text>
-								<text class="txt2">{{goods.bonus}}</text>
-								<text class="txt3">/{{goods.type}}</text>
-							</view>
-						</view>
-					</view>
-					
-				</scroll-view>
-			</view>
+			<Merchant :store="store" v-for="(store,i) in storeList" :key="i"></Merchant>
 		</view>
 		</mescroll-body>
 		<view class="foot" v-if="showFoot">
@@ -108,13 +57,13 @@
 		</view>
 		<view class="footzw"></view>
 	</view>
-	
 </template>
 
 <script>
 	import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
 	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 	import MescrollMixin from "@/components/mescroll-uni/mescroll-mixins.js";
+	import Merchant from "@/components/merchant.vue";
 	
 	//引入测试数据
 	import testData from "@/common/testdata.js";
@@ -124,7 +73,8 @@
 	export default {
 		mixins: [MescrollMixin], 
 		components:{
-			MescrollBody
+			MescrollBody,
+			Merchant
 		},
 		onPageScroll(e){
 			let that= this;
@@ -510,148 +460,6 @@ page{
 }
 .store-box{
 	margin-top: 20px;
-	
-	.item-box{
-		display: flex;
-		flex-direction: column;
-		margin-bottom: 14px;
-		padding-bottom: 18px;
-		padding-top: 18px;
-		background-color: #ffffff;
-		.top-box{
-			display: flex;
-			flex-direction: row;
-			.left{
-				margin-right: 10px;
-				
-				
-				image{
-					width: 72px;
-					height: 54px;
-					border-radius: 6px;
-				}
-			}
-			.right{
-				flex: 1;
-				.tit{
-					font-size: 16px;
-					font-weight: bold;
-					color: #333333;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-				.justify-content{
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-				}
-				.row{
-					font-size: 12px;
-					color: #999999;
-					margin-top: 4px;
-					.row-left{
-						display: flex;
-						flex-direction: row;
-						.t1,i{
-							color: #ffca3e;
-						}
-						
-					}
-					.t2{
-						margin-left: 12px;
-					}
-					.row-right{
-						display: flex;
-						flex-direction: row;
-						i{
-							margin-right: 4px;
-						}
-					}
-					
-				}
-			}
-		}
-		.bottom-box{
-			&-container{
-				margin: 12px 0 0;
-				padding-left: 82px;
-				
-				white-space: nowrap;
-				.goods-box{
-					width: 90%;
-					margin-left: 12px;
-					display: flex;
-					align-items: flex-end;
-					// display: inline-block;
-					.img-box{
-						position: relative;
-						width: 80px;
-						height: 60px;
-						background-color: #f1f1f1;
-						border-radius: 4px;
-						image{
-							width: 100%;
-							height: 60px;
-						}
-						.tag{
-							position: absolute;
-							bottom: 0;
-							left: 0;
-							background-color: #FF5722;
-							color: #ffffff;
-							padding: 2px 4px;
-							font-size: 12px;
-							border-radius: 4px;
-						}
-					}
-					.tit{
-						
-						font-size: 14px;
-						margin-top: 4px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-					.hint{
-						flex: 1;
-						margin-left: 5px;
-						font-size: 12px;
-						margin-top: 4px;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						color: #9b9e9e;
-					}
-					.price-box{
-						margin-top: 4px;
-						.txt1{
-							font-size: 10px;
-							color: #FF5722;
-						}
-						.txt2{
-							font-size: 16px;
-							color: #FF5722;
-						}
-						.txt3{
-							margin-left: 6px;
-							font-size: 10px;
-							color: #bbbbbb;
-							// text-decoration: line-through;
-						}
-					}
-				}
-				.goods-box:last-child{
-					margin-right: 12px;
-				}
-				
-			}
-			
-		}
-	}
-	.item-box:last-child{
-		border-bottom: 0;
-	}
 }
 .foot{
 	position: relative;

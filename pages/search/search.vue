@@ -16,39 +16,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="content-main" :style="{ 'padding-top': `${get_system_info.custom_bar + 100}px` }">
-			<template v-if="page_data.user_list.length > 0">
-				<view class="cu-card dynamic">
-					<view class="cu-item shadow" @click="handleItemClick(user)" v-for="user in page_data.user_list">
-						<view class="padding-sm solid-bottom bg-red text-white">
-
-							<view class="action" v-if="user.admin">
-								<text class="cuIcon-title text-white"></text>
-								<text>{{user.admin.user_name}}</text>
-							</view>
-						</view>
-						<view class="padding padding-bottom-sm" v-if="user.tag">
-							<view class="text-gray text-sm flex flex-wrap">
-								<view class='cu-tag' :class="'line-' + page_config.color_config[index]" style="margin: 0 10rpx 10rpx 0" v-for="(tag, index) in user.tag">{{tag}}</view>
-							</view>
-						</view>
-						<view class="text-content">
-							<text class="text-content text-df">{{user.introduction}}</text>
-						</view>
-						<view class="grid flex-sub padding-lr col-1" v-if="user.imgList">
-							<view class="bg-img only-img" :style="'background-image:url(' + user.imgList[0] + ')'"></view>
-						</view>
-						<view class="text-gray text-sm padding" style="display: flex; align-items: center; line-height: 20px;">
-							<view style="flex: 1; display: flex;">
-								<image :src="user.avatar_url || 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201912%2F25%2F20191225224833_zloky.thumb.400_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623481033&t=2492609cde122393a99b4af1a177bf8d'"
-								 mode="aspectFill" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 10px;"></image>
-								<text style="color: #333333">{{user.user_name}}</text>
-								<text style="margin-left: 10px;">活跃于{{getDateDiff(user.update_time)}}</text>
-							</view>
-							<text class="cuIcon-attentionfill margin-lr-xs"></text>{{user.hot || 0}}
-						</view>
-					</view>
-				</view>
+		<view class="content-main" :style="{ 'padding-top': `${get_system_info.custom_bar + 70}px` }">
+			<template v-if="page_data.store_list.length > 0">
+				<Merchant :store="store" v-for="(store, i) in page_data.store_list" :key="i"></Merchant>
 			</template>
 			<empty text="暂无符合条件的商家" v-else></empty>
 		</view>
@@ -63,9 +33,13 @@
 		mapMutations
 	} from 'vuex'
 	import Empty from '../../components/empty.vue'
+	import Merchant from '../../components/merchant.vue'
+	import testData from "@/common/testdata.js";
+
 	export default {
 		components: {
-			Empty
+			Empty,
+			Merchant
 		},
 		data() {
 			return {
@@ -82,6 +56,7 @@
 					age_sort: true
 				},
 				page_data: {
+					store_list: [],
 					user_list: [],
 					admin_info: {},
 					doing: 'list'
@@ -91,7 +66,8 @@
 		onLoad({
 			invite_id
 		}) {
-			if (invite_id) this.page_status.invite_id = invite_id
+			this.page_data.store_list = testData.storeList;
+			console.log('尼玛', this.get_system_info)
 		},
 		onPullDownRefresh() {
 			this.page_status.next_page = 0
@@ -176,7 +152,7 @@
 					},
 					success: (res) => {
 						if (res.data.length === this.page_config.page_size) {
-							this.page_status.next_page ++
+							this.page_status.next_page++
 						}
 						this.page_data.user_list = [
 							...this.page_data.user_list,
