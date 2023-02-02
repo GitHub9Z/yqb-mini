@@ -3,11 +3,12 @@
 		<view class="user-section ">
 			<image class="bg"></image>
 			<view class="user-info-box">
-				<view class="portrait-box" @click="userBash">
-					<image class="portrait" :src="memberInfo.face || defaultFace"></image>
+				<view class="portrait-box" @click="handleLogin">
+					<image class="portrait" :src="(get_user_info && get_user_info.header) || defaultFace"></image>
 				</view>
-				<view class="info-box" @click="userBash">
-					<text class="username">{{memberInfo.nickname || '登录/注册'}}</text>
+				<view class="info-box" @click="handleLogin">
+					<text class="username">{{(get_user_info.id && ('欢迎您, 用户' + new String(get_user_info.phone).substring(new String(get_user_info.phone).length - 4))) || '登录/注册'}}</text>
+					<text class="slogan">易签多 花的越多 赚的更多</text>
 				</view>
 			</view>
 			<view class="vip-card-box">
@@ -38,7 +39,7 @@
 			
 			<view class="tj-sction">
 				<view class="tj-item">
-					<text class="num">128.00</text>
+					<text class="num">{{get_user_info.wallet || '-'}}</text>
 					<text>余额</text>
 				</view>
 				<view class="tj-item" @click="navTo('/pages/user/coupon/coupon')">
@@ -46,12 +47,12 @@
 					<text>月收益</text>
 				</view>
 				<view class="tj-item">
-					<text class="num">820</text>
+					<text class="num">{{get_user_info.credit || '-'}}</text>
 					<text>信用分</text>
 				</view>
 			</view> 
 		</view>
-		<view class="cu-list menu sm-border margin-top">
+		<view class="cu-list menu sm-border margin-top" v-if="get_user_info.id">
 			<view class="cu-item arrow">
 				<button class="cu-btn content">
 					<text class="cuIcon-qrcode text-gray"></text>
@@ -59,10 +60,10 @@
 				</button>
 			</view>
 			<view class="cu-item arrow">
-				<view class="content" style="width: 100%;">
+				<button class="cu-btn content">
 					<text class="cuIcon-card text-olive"></text>
 					<text class="text-grey">我的合约</text>
-				</view>
+				</button>
 			</view>
 			<view class="cu-item arrow">
 				<button class="cu-btn content" open-type="contact">
@@ -71,11 +72,11 @@
 				</button>
 			</view>
 			
-			<view class="cu-item arrow margin-top">
-				<view class="content">
+			<view class="cu-item arrow margin-top" @click="handleLogOut">
+				<button class="cu-btn content">
 					<text class="cuIcon-settingsfill text-grey"></text>
 					<text class="text-grey">退出登录</text>
-				</view>
+				</button>
 			</view>
 		</view>
     </view>  
@@ -85,7 +86,9 @@
 
 	import listCell from '@/components/mix-list-cell';
     import {  
-        mapState 
+        mapState,
+		mapGetters,
+		mapMutations
     } from 'vuex';
 	let startY = 0, moveY = 0, pageAtTop = true;
     export default {
@@ -101,7 +104,6 @@
 				moving: false,
 				defaultFace: '/static/img/logo_round.jpg',
 				userSettingUrl: '/pages/user/setting/setting',
-				
 				memberInfo: {
 					face: '',
 					nickname: "",
@@ -116,50 +118,15 @@
 			
 		},
 		onShow(){
-			let member = this.userData.member;
-			if(member){
-				this.memberInfo = {
-					face: member.facke, 
-					nickname: member.nickname
-				}
-			}else{
-				this.memberInfo = {
-					face: '', 
-					nickname: ''
-				}
-			}
-			
 		},
-		// #ifndef MP
-		onNavigationBarButtonTap(e) {
-			const index = e.index;
-			if (index === 0) {
-				this.navTo('/pages/user/setting/setting');
-			}else if(index === 1){
-				// #ifdef APP-PLUS
-				const pages = getCurrentPages();
-				const page = pages[pages.length - 1];
-				const currentWebview = page.$getAppWebview();
-				currentWebview.hideTitleNViewButtonRedDot({
-					index
-				});
-				// #endif
-				uni.navigateTo({
-					url: '/pages/notice/notice'
-				})
-			}
-		},
-		// #endif
         computed: {
-			...mapState(['hasLogin','userData'])
+			...mapGetters(['get_user_info'])
 		},
         methods: {
+			...mapMutations(['set_user_info']),
 			//个人信息
-			userBash(){
-				if(this.userData){
-					this.navTo('/pages/user/bash/bash')
-					
-				}else{
+			handleLogin(){
+				if (!uni.getStorageSync('token')) {
 					uni.navigateTo({
 					    url: '/pages/user/login/login'
 					});
@@ -205,7 +172,10 @@
 				this.coverTransition = 'transform 0.3s cubic-bezier(.21,1.93,.53,.64)';
 				this.coverTransform = 'translateY(0px)';
 			},
-			
+			handleLogOut() {
+				uni.clearStorageSync()
+				this.set_user_info({})
+			},
 			
         }
     }  
@@ -255,10 +225,21 @@
 			border:5upx solid #fff;
 			border-radius: 50%;
 		}
+		.info-box {
+			display: flex;
+			flex-direction: column;
+		}
 		.username{
-			font-size: $font-lg + 4upx;
+			font-size: $font-lg + 8upx;
 			color: white;
 			margin-left: 40upx;
+		}
+		.slogan{
+			font-size: $font-lg;
+			color: white;
+			margin-left: 40upx;
+			opacity: .6;
+			margin-top: 10upx;
 		}
 	}
 

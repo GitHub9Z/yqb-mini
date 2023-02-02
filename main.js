@@ -35,6 +35,36 @@ Vue.config.productionTip = false
 
 App.mpType = 'app'
 
+let ori_request = uni.request
+uni.request = (params) => {
+	uni.showLoading({
+		title: '加载中',
+		mask: true
+	})
+	let ori_success = params.success
+	params.success = (res) => {
+		uni.hideLoading()
+		if (res.statusCode === 403) {
+			uni.clearStorageSync()
+			uni.navigateTo({
+				url: '/pages/user/login/login'
+			})
+		}
+		ori_success(res)
+	}
+	let api_name = params.url.split('/')[params.url.split('/').length - 1]
+	if (/^[A-Z]+$/.test(api_name)) {
+		ori_request(params)
+	} else {
+		ori_request({
+			...params,
+			header: {
+				authorization: uni.getStorageSync('token')
+			}
+		})
+	}
+}
+
 const app = new Vue({
     ...App
 })

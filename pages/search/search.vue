@@ -16,7 +16,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="content-main" :style="{ 'padding-top': `${get_system_info.custom_bar + 70}px` }">
+		<view class="content-main" :style="{ 'padding-top': `calc(${get_system_info.custom_bar}px + 130upx)` }">
 			<template v-if="page_data.store_list.length > 0">
 				<Merchant :store="store" v-for="(store, i) in page_data.store_list" :key="i"></Merchant>
 			</template>

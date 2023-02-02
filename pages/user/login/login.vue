@@ -26,7 +26,7 @@
 				<view class="title"><text class="lg text-gray cuIcon-mail"></text></view>
 				<input placeholder="验证码" name="input" type="number" v-model="page_status.input_sms"></input>
 				<button class='cu-btn bg-red' v-if="page_status.left_time" disabled>{{page_status.left_time}}秒后重新发送</button>
-				<button class='cu-btn bg-red' v-else :disabled="!isSmsAbled" @getuserinfo="hanldeSmsClick" open-type="getUserInfo">验证码</button>
+				<button class='cu-btn bg-red' v-else :disabled="!isSmsAbled" @click="hanldeSmsClick" @getuserinfo="hanldeSmsClick" open-type="getUserInfo">验证码</button>
 			</view>
 			<view class="content-main-btn"><button class="cu-btn bg-red margin-tb-sm lg round" style="width: 100%;" :disabled="!isLoginAbled"
 				 @click="handleLoginClick">立即登录/注册</button></view>
@@ -53,18 +53,8 @@
 			}
 		},
 		async onLoad() {
-			if (uni.getStorageSync('token')) {
-				uni.redirectTo({
-					url: '/pages/search/search'
-				})
-			}
 		},
 		async onShow() {
-			if (uni.getStorageSync('token')) {
-				uni.redirectTo({
-					url: '/pages/search/search'
-				})
-			}
 		},
 		computed: {
 			...mapGetters(['get_user_info']),
@@ -76,40 +66,67 @@
 			}
 		},
 		methods: {
+			...mapActions(['GET_USER_INFO']),
 			async hanldeSmsClick(e) {
-				const userInfo = e.detail.userInfo
-				uni.login({
-					success: res => {
-						var code = res.code;
-						uni.request({
-							url: 'http://localhost:824/yqb/user/SMS', //仅为示例，并非真实接口地址。
-							data: {
-								phone: this.page_status.input_phone,
-								user_info: JSON.stringify(userInfo)
-							},
-							header: {
-								'custom-header': 'hello' //自定义请求头信息
-							},
-							success: ({ data }) => {
-								if (data.success) {
-									this.page_status.left_time = 60
-									let _int = setInterval(() => {
-										this.page_status.left_time--
-										if (this.page_status.left_time === 0) {
-											clearInterval(_int)
-										}
-									}, 1000)
-								} else {
-									uni.showToast({
-										title: data.message,
-										duration: 2000
-									})
-								}
-							}
-						})
-
+				uni.request({
+					url: 'http://localhost:824/yqb/user/SMS', //仅为示例，并非真实接口地址。
+					data: {
+						phone: this.page_status.input_phone,
 					},
+					header: {
+						'custom-header': 'hello' //自定义请求头信息
+					},
+					success: ({ data }) => {
+						if (data.success) {
+							this.page_status.left_time = 60
+							let _int = setInterval(() => {
+								this.page_status.left_time--
+								if (this.page_status.left_time === 0) {
+									clearInterval(_int)
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: data.message,
+								duration: 2000
+							})
+						}
+					}
 				})
+				
+				// const userInfo = e.detail.userInfo
+				// uni.login({
+				// 	success: res => {
+				// 		var code = res.code;
+				// 		uni.request({
+				// 			url: 'http://localhost:824/yqb/user/SMS', //仅为示例，并非真实接口地址。
+				// 			data: {
+				// 				phone: this.page_status.input_phone,
+				// 				user_info: JSON.stringify(userInfo)
+				// 			},
+				// 			header: {
+				// 				'custom-header': 'hello' //自定义请求头信息
+				// 			},
+				// 			success: ({ data }) => {
+				// 				if (data.success) {
+				// 					this.page_status.left_time = 60
+				// 					let _int = setInterval(() => {
+				// 						this.page_status.left_time--
+				// 						if (this.page_status.left_time === 0) {
+				// 							clearInterval(_int)
+				// 						}
+				// 					}, 1000)
+				// 				} else {
+				// 					uni.showToast({
+				// 						title: data.message,
+				// 						duration: 2000
+				// 					})
+				// 				}
+				// 			}
+				// 		})
+
+				// 	},
+				// })
 			},
 			async handleLoginClick() {
 				uni.clearStorageSync()
@@ -122,12 +139,12 @@
 					header: {
 						'custom-header': 'hello' //自定义请求头信息
 					},
-					success: ({ data }) => {
+					success: async ({ data }) => {
+						console.log(data)
 						if (data.data) {
 							uni.setStorageSync('token', data.data.token)
-							uni.redirectTo({
-								url: '/pages/index/index'
-							})
+							await this.GET_USER_INFO()
+							uni.navigateBack()
 						} else {
 							uni.showToast({
 								title: data.message,

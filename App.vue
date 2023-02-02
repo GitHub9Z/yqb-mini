@@ -8,6 +8,7 @@
 	} from 'vuex'
 	export default {
 		onLaunch: function() {
+			// this.GET_USER_INFO()
 			this.GET_SYSTEM_INFO()
 		},
 		onShow: function() {
@@ -17,7 +18,7 @@
 			console.log('App Hide')
 		},
 		methods: {
-			...mapActions(['GET_SYSTEM_INFO'])
+			...mapActions(['GET_SYSTEM_INFO', 'GET_USER_INFO'])
 		}
 	}
 </script>

@@ -47,27 +47,27 @@ const store = {
 	},
 	mutations: {
 		'set_user_info': (state, user_info) => {
-			let info = JSON.parse(user_info.user_info || '{}')
-			user_info.integrity = Math.floor(Object.keys(info).filter(_i => info[_i] && JSON.stringify(info[_i]) !== '[]').length * 100 / 11)
 			state.user_info = user_info
-			console.log(user_info)
-			if ((user_info.user_type === 0) && !user_info.invite_id) uni.navigateTo({
-				url: './invite'
-			})
+			// let info = JSON.parse(user_info.user_info || '{}')
+			// user_info.integrity = Math.floor(Object.keys(info).filter(_i => info[_i] && JSON.stringify(info[_i]) !== '[]').length * 100 / 11)
+			// state.user_info = user_info
+			// console.log(user_info)
+			// if ((user_info.user_type === 0) && !user_info.invite_id) uni.navigateTo({
+			// 	url: './invite'
+			// })
 		}
 	},
 	actions: {
 		'GET_USER_INFO': async ({
 			commit
 		}) => {
-			await uni.request_sync({
-				url: 'https://www.imgker.com/venus/user/get_user_info', //仅为示例，并非真实接口地址。
+			await uni.request({
+				url: 'http://localhost:824/yqb/user/get_info', //仅为示例，并非真实接口地址。
 				data: {},
 				header: {
-					'custom-header': 'hello' //自定义请求头信息
 				},
 				success: (res) => {
-					commit('set_user_info', res.data)
+					commit('set_user_info', res.data.data)
 				}
 			})
 		},
