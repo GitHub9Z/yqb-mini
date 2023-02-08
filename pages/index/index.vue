@@ -66,7 +66,6 @@
 	import Merchant from "@/components/merchant.vue";
 
 	//引入测试数据
-	import testData from "@/common/testdata.js";
 	const screenHeight = uni.getSystemInfoSync().screenHeight;
 	//获取系统状态栏高度
 	const statusBarHeight = uni.getSystemInfoSync().statusBarHeight + 'px';

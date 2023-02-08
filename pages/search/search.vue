@@ -38,7 +38,6 @@
 	} from 'vuex'
 	import Empty from '../../components/empty.vue'
 	import Merchant from '../../components/merchant.vue'
-	import testData from "@/common/testdata.js";
 
 	export default {
 		components: {
