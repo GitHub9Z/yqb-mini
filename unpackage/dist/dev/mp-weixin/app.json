@@ -1,11 +1,14 @@
 {
   "pages": [
-    "pages/user/login/login",
     "pages/index/index",
     "pages/store/index",
     "pages/product/product",
     "pages/user/register/register",
     "pages/user/forget/forget",
+    "pages/user/withdraw/index",
+    "pages/user/history/index",
+    "pages/user/wallet/index",
+    "pages/user/login/login",
     "pages/user/center/center",
     "pages/user/setting/setting",
     "pages/user/bash/bash",
@@ -31,7 +34,11 @@
     "pages/search/search",
     "pages/user/coupon/coupon",
     "pages/map/location",
-    "pages/promise/promise"
+    "pages/promise/promise",
+    "pages/topromise/topromise",
+    "pages/finishpromise/finishpromise",
+    "pages/listpromise/listpromise",
+    "pages/voucher/voucher"
   ],
   "subPackages": [],
   "window": {
@@ -43,28 +50,28 @@
   },
   "tabBar": {
     "color": "#C0C4CC",
-    "selectedColor": "#ffc107",
+    "selectedColor": "#e54d42",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "fontSize": "11px",
-    "spacing": "5px",
+    "fontSize": "10px",
+    "spacing": "2px",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/tabbar/tab-home.png",
-        "selectedIconPath": "static/tabbar/tab-home-current.png",
-        "text": "首页"
+        "iconPath": "static/tabbar/find_gray.png",
+        "selectedIconPath": "static/tabbar/find_red.png",
+        "text": "发现"
       },
       {
-        "pagePath": "pages/order/order",
-        "iconPath": "static/tabbar/order.png",
-        "selectedIconPath": "static/tabbar/order-current.png",
-        "text": "订单"
+        "pagePath": "pages/promise/promise",
+        "iconPath": "static/tabbar/promise_gray.png",
+        "selectedIconPath": "static/tabbar/promise_red.png",
+        "text": "合约"
       },
       {
         "pagePath": "pages/user/center/center",
-        "iconPath": "static/tabbar/tab-my.png",
-        "selectedIconPath": "static/tabbar/tab-my-current.png",
+        "iconPath": "static/tabbar/user_gray.png",
+        "selectedIconPath": "static/tabbar/user_red.png",
         "text": "我的"
       }
     ]
@@ -76,6 +83,5 @@
   },
   "usingComponents": {
     "cu-custom": "/colorui/components/cu-custom"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

@@ -1,5 +1,5 @@
 <template>  
-    <view class="container">  
+    <view class="container" style="background: #F5F5F5;">  
 		<view class="user-section ">
 			<image class="bg"></image>
 			<view class="user-info-box">
@@ -38,13 +38,13 @@
 			<image class="arc" src="/static/img/user/arc.png"></image>
 			
 			<view class="tj-sction">
-				<view class="tj-item">
-					<text class="num">{{get_user_info.wallet || '-'}}</text>
+				<view class="tj-item" @click="navigateTo('/pages/user/wallet/index')">
+					<text class="num">{{get_user_info.wallet.toFixed(2) || '-'}}</text>
 					<text>余额</text>
 				</view>
-				<view class="tj-item" @click="navTo('/pages/user/coupon/coupon')">
-					<text class="num">32.00</text>
-					<text>月收益</text>
+				<view class="tj-item" @click="navigateTo('/pages/user/wallet/index')">
+					<text class="num">{{get_user_info.withdraw.toFixed(2) || '-'}}</text>
+					<text>已提现</text>
 				</view>
 				<view class="tj-item">
 					<text class="num">{{get_user_info.credit || '-'}}</text>
@@ -52,25 +52,25 @@
 				</view>
 			</view> 
 		</view>
-		<view class="cu-list menu sm-border margin-top" v-if="get_user_info.id">
+		<view class="cu-list menu sm-border" v-if="get_user_info.id">
 			<view class="cu-item arrow">
-				<button class="cu-btn content">
+				<button class="cu-btn content" @click="navigateTo('/pages/user/wallet/index')">
 					<text class="cuIcon-qrcode text-gray"></text>
 					<text class="text-grey">我的钱包</text>
 				</button>
 			</view>
 			<view class="cu-item arrow">
-				<button class="cu-btn content">
+				<button class="cu-btn content" @click="reLaunch('/pages/promise/promise')"> 
 					<text class="cuIcon-card text-olive"></text>
 					<text class="text-grey">我的合约</text>
 				</button>
 			</view>
-			<view class="cu-item arrow">
+<!-- 			<view class="cu-item arrow">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-questionfill text-yellow"></text>
 					<text class="text-grey">密码设置</text>
 				</button>
-			</view>
+			</view> -->
 			
 			<view class="cu-item arrow margin-top" @click="handleLogOut">
 				<button class="cu-btn content">
@@ -88,7 +88,8 @@
     import {  
         mapState,
 		mapGetters,
-		mapMutations
+		mapMutations,
+		mapActions
     } from 'vuex';
 	let startY = 0, moveY = 0, pageAtTop = true;
     export default {
@@ -118,12 +119,24 @@
 			
 		},
 		onShow(){
+			this.GET_USER_INFO()
 		},
         computed: {
 			...mapGetters(['get_user_info'])
 		},
         methods: {
+			...mapActions(['GET_USER_INFO']),
 			...mapMutations(['set_user_info']),
+			navigateTo(url) {
+				uni.navigateTo({
+					url
+				})
+			},
+			reLaunch(url) {
+				uni.reLaunch({
+					url
+				})
+			},
 			//个人信息
 			handleLogin(){
 				if (!uni.getStorageSync('token')) {
@@ -180,7 +193,8 @@
         }
     }  
 </script>  
-<style lang='scss'>
+<style lang='scss' scoped>
+	
 	%flex-center {
 	 display:flex;
 	 flex-direction: column;
@@ -296,7 +310,8 @@
 		padding: 0 30upx;
 		position:relative;
 		background: #f5f5f5;
-		padding-bottom: 20upx;
+		padding-bottom: 25upx;
+		padding-top: 10upx;
 		.arc{
 			position:absolute;
 			left: 0;

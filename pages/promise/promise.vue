@@ -5,50 +5,55 @@
 				<block slot="content">我的合约</block>
 			</cu-custom>
 		</view>
+		<template v-if="page_data.promise_list.length">
 		<view class="content-board bg-red">
-			<view class="content-board-title">每月收益</view>
-			<view class="content-board-main">32.00</view>
-			<view class="content-board-btn">我的钱包</view>
+			<view class="content-board-title">本月预计收益</view>
+			<view class="content-board-main">{{page_data.promise_bonus}}</view>
+			<navigator class="content-board-btn" url="/pages/user/wallet/index" navigateTo>我的钱包</navigator>
 		</view>
-		<view class="content-main VerticalBox" :style="{ 'padding-top': `0` }">
+		<view class="content-main VerticalBox" :style="{ 'padding-top': `15px` }">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop">
-				<view class="cu-item" :class="{ 'text-red': index==tabCur, 'cur': index==tabCur }"
-				 v-for="(value, index) in page_data.bag_data" :key="index" @tap="TabSelect" :data-id="index">
-					{{value.theme}}
+				<view class="cu-item" :class="{ 'text-red': index==tabCur, 'cur': (index==tabCur && promises.length > 1) }"
+				 v-for="(group, index) in promises" :key="index" @tap="TabSelect" :data-id="index">
+					{{group.type}}
 				</view>
 			</scroll-view>
-			<scroll-view class="content-main-content VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 140upx)"
+			<scroll-view class="content-main-content VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 200upx)"
 			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
-				<view class="content-main-content-litem padding-top padding-lr" v-for="(list, index) in page_data.bag_data" :key="index"
+				<view class="content-main-content-litem padding-bottom padding-lr" v-for="(group, index) in promises" :key="index"
 				 :id="'main-'+index">
+				 
 					<view class="cu-bar solid-bottom bg-white">
 						<view class="action">
-							<text class="cuIcon-title text-red"></text>{{list.theme}}</view>
+							<text class="cuIcon-title text-red"></text>{{group.type}}</view>
 					</view>
 					<view class="content-main-content-right cu-list menu-avatar">
-						<navigator class="content-main-content-right-item" v-for="item in list.coins"
-						 hover-class='none' :url="`/pages/finishpromise/finishpromise?coin_id=${item.coin_id}`" navigateTo>
+						<navigator class="content-main-content-right-item" style="position: relative;"  v-for="promise in group.list"
+						 hover-class='none' :url="`/pages/finishpromise/finishpromise?promise_id=${promise.id}`" navigateTo>
+							<image src="../../static/img/finish.png" mode="aspectFit" style="position: absolute; height: 100%; width: 70%; right: 0; transform: rotateZ(30deg); filter:grayscale(100%); bottom: 0px; opacity: .2;" v-if="promise.status === 3">
+							
 							<view class="content-main-content-right-item-info">
-								<view class="text-black">{{item.coin_name}}</view>
+								<view class="text-black">{{promise.protocal.title}}</view>
 								<view class="text-gray text-sm flex align-center">
-										<text class="cu-tag bg-gray sm" style="border: 1px solid #e54d42; border-top-left-radius: 3px; border-bottom-left-radius: 3px;">{{item.publish_sum}}</text>
-										<view class='cu-tag bg-red sm' style="border-top-right-radius: 3px; border-bottom-right-radius: 3px; margin: 5px 5px 5px 0px; font-size: 10px;">{{item.type}}</view>
+										<text class="cu-tag bg-gray sm" style="border: 1px solid #e54d42; border-top-left-radius: 3px; border-bottom-left-radius: 3px;">{{promise.merchant.title}}</text>
+										<view class='cu-tag bg-red sm' style="border-top-right-radius: 3px; border-bottom-right-radius: 3px; margin: 5px 5px 5px 0px; font-size: 10px;">{{generate_task(promise.protocal)}}</view>
 										
 									</view>
 							</view>
 							<view class="content-main-content-right-item-action">
-								<view class="content-main-content-right-item-action-num text-gray">{{item.bonus}}</view>
+								<view class="content-main-content-right-item-action-num text-gray">{{promise.protocal.bonus}}/{{generate_date(promise.protocal)}}</view>
 								<view class="text-grey text-xs" style="padding: 3px 0;">
-									<text style="font-size: 12px;" class="lg text-red cuIcon-radioboxfill" v-for="i in Number(item.coin_level)"></text>
-									<text style="font-size: 12px;" class="lg text-gray cuIcon-radioboxfill" v-for="i in (5 - Number(item.coin_level))"></text>
+									<text style="font-size: 12px;" class="lg text-red cuIcon-radioboxfill" v-for="i in Number(promise.rate)"></text>
+									<text style="font-size: 12px; opacity: .5;" class="lg text-gray cuIcon-radioboxfill" v-for="i in (5 - Number(promise.rate))"></text>
 								</view>
-								
 							</view>
 						</navigator>
 					</view>
 				</view>
 			</scroll-view>
 		</view>
+		</template>
+		<empty text="暂未签订合约哦" v-else></empty>
 	</view>
 </template>
 
@@ -59,191 +64,26 @@
 		mapActions,
 		mapMutations
 	} from 'vuex'
+	import Empty from '../../components/empty.vue'
 	export default {
+		components: {
+			Empty
+		},
 		data() {
 		
 			return {
+				page_config: {
+					type_enum: {
+						1: '餐饮',
+						2: '娱乐',
+						3: '日用',
+						4: '出行',
+						5: '服装',
+						6: '运动'
+					}
+				},
 				page_data: {
-					bag_data: [{
-						"theme": "餐饮",
-						"coins": [{
-							"_id": "5f866cab48a88d438560b5e7",
-							"coin_id": "1",
-							"coin_name": "每月消费合约",
-							"theme_id": "1",
-							"coin_level": "3",
-							"publish_sum": "肯德基 KFC",
-							"instore_sum": "396",
-							"inpool_sum": "78",
-							"online_sum": "26",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:12:43.175Z",
-							"update_time": "2020-10-14T03:12:43.175Z",
-							"__v": 0,
-							"publish_price": "40",
-							"lucky_sum": "111",
-							"type": "消费满5次",
-							"bonus": "5元/月"
-						}, {
-							"_id": "5f866fb1496c834422542e2b",
-							"coin_id": "2",
-							"coin_name": "每月堂食合约",
-							"theme_id": "1",
-							"coin_level": "5",
-							"publish_sum": "塔斯汀中国汉堡",
-							"instore_sum": "395",
-							"inpool_sum": "77",
-							"online_sum": "28",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:25:37.489Z",
-							"update_time": "2020-10-14T03:25:37.489Z",
-							"__v": 0,
-							"img_url": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=479215651,3959279275&fm=26&gp=0.jpg",
-							"publish_price": "30",
-							"lucky_sum": "56",
-							"type": "消费2000元",
-							"bonus": "120元/月"
-						}]
-					}, {
-						"theme": "娱乐",
-						"coins": [{
-							"_id": "5f866cab48a88d438560b5e7",
-							"coin_id": "1",
-							"coin_name": "每月消费合约",
-							"theme_id": "1",
-							"coin_level": "3",
-							"publish_sum": "肯德基 KFC",
-							"instore_sum": "396",
-							"inpool_sum": "78",
-							"online_sum": "26",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:12:43.175Z",
-							"update_time": "2020-10-14T03:12:43.175Z",
-							"__v": 0,
-							"publish_price": "40",
-							"lucky_sum": "111",
-							"type": "消费满5次",
-							"bonus": "5元/月"
-						}, {
-							"_id": "5f866fb1496c834422542e2b",
-							"coin_id": "2",
-							"coin_name": "每月堂食合约",
-							"theme_id": "1",
-							"coin_level": "5",
-							"publish_sum": "塔斯汀中国汉堡",
-							"instore_sum": "395",
-							"inpool_sum": "77",
-							"online_sum": "28",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:25:37.489Z",
-							"update_time": "2020-10-14T03:25:37.489Z",
-							"__v": 0,
-							"img_url": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=479215651,3959279275&fm=26&gp=0.jpg",
-							"publish_price": "30",
-							"lucky_sum": "56",
-							"type": "消费2000元",
-							"bonus": "120元/月"
-						}]
-					}, {
-						"theme": "日用",
-						"coins": [{
-							"_id": "5f866cab48a88d438560b5e7",
-							"coin_id": "1",
-							"coin_name": "每月消费合约",
-							"theme_id": "1",
-							"coin_level": "3",
-							"publish_sum": "肯德基 KFC",
-							"instore_sum": "396",
-							"inpool_sum": "78",
-							"online_sum": "26",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:12:43.175Z",
-							"update_time": "2020-10-14T03:12:43.175Z",
-							"__v": 0,
-							"publish_price": "40",
-							"lucky_sum": "111",
-							"type": "消费满5次",
-							"bonus": "5元/月"
-						}, {
-							"_id": "5f866fb1496c834422542e2b",
-							"coin_id": "2",
-							"coin_name": "每月堂食合约",
-							"theme_id": "1",
-							"coin_level": "5",
-							"publish_sum": "塔斯汀中国汉堡",
-							"instore_sum": "395",
-							"inpool_sum": "77",
-							"online_sum": "28",
-							"offline_sum": "0",
-							"create_time": "2020-10-14T03:25:37.489Z",
-							"update_time": "2020-10-14T03:25:37.489Z",
-							"__v": 0,
-							"img_url": "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=479215651,3959279275&fm=26&gp=0.jpg",
-							"publish_price": "30",
-							"lucky_sum": "56",
-							"type": "消费满2000元",
-							"bonus": "120元/月"
-						}]
-					}, {
-						"theme": "出行",
-						"coins": [{
-							"_id": "5fbb6d611dde41c6be95da67",
-							"coin_id": "7",
-							"coin_name": "新裤子",
-							"lucky_sum": "22",
-							"img_url": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3589058581,3140230150&fm=15&gp=0.jpg",
-							"theme_id": "3",
-							"coin_level": "3",
-							"publish_sum": "-1",
-							"instore_sum": "0",
-							"inpool_sum": "0",
-							"online_sum": "0",
-							"offline_sum": "0",
-							"create_time": "2020-11-23T08:05:53.010Z",
-							"update_time": "2020-11-23T08:05:53.010Z",
-							"__v": 0,
-							"type": "消费2000元"
-						}]
-					}, {
-						"theme": "服装",
-						"coins": [{
-							"_id": "5fbb6d611dde41c6be95da67",
-							"coin_id": "7",
-							"coin_name": "新裤子",
-							"lucky_sum": "22",
-							"img_url": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3589058581,3140230150&fm=15&gp=0.jpg",
-							"theme_id": "3",
-							"coin_level": "3",
-							"publish_sum": "-1",
-							"instore_sum": "0",
-							"inpool_sum": "0",
-							"online_sum": "0",
-							"offline_sum": "0",
-							"create_time": "2020-11-23T08:05:53.010Z",
-							"update_time": "2020-11-23T08:05:53.010Z",
-							"__v": 0
-						}]
-					}, {
-						"theme": "运动",
-						"coins": [{
-							"_id": "5fbb6d611dde41c6be95da67",
-							"coin_id": "7",
-							"coin_name": "新裤子",
-							"lucky_sum": "22",
-							"img_url": "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3589058581,3140230150&fm=15&gp=0.jpg",
-							"theme_id": "3",
-							"coin_level": "3",
-							"publish_sum": "-1",
-							"instore_sum": "0",
-							"inpool_sum": "0",
-							"online_sum": "0",
-							"offline_sum": "0",
-							"create_time": "2020-11-23T08:05:53.010Z",
-							"update_time": "2020-11-23T08:05:53.010Z",
-							"__v": 0
-						}]
-					}],
-					hold_data: []
+					promise_list: []
 				},
 				list: [],
 				tabCur: 0,
@@ -257,10 +97,100 @@
 		},
 		onReady() {},
 		computed: {
-			...mapGetters(['get_system_info', 'get_user_info'])
+			...mapGetters(['get_system_info', 'get_user_info']),
+			promises() {
+				let pool = []
+				this.page_data.promise_list?.forEach(_i => {
+					_i.type = this.page_config.type_enum[_i.merchant.type]
+					_i.rate = Math.round(5 * (_i.finish_num || 0) / _i.protocal.task_num)
+					if (_i.rate > 5) _i.rate = 5
+					let group = pool.find(__i => __i.type === _i.type)
+					if (group) {
+						group.list.push(_i)
+					} else {
+						pool.push({
+							type: _i.type,
+							list: [_i]
+						})
+					}
+				})
+				return pool
+			}
 		},
 		methods: {
-			fetchData() {},
+			generate_date({
+				time
+			}) {
+				if (!(time % 365)) {
+					return ((time / 365 === 1 ? '' : time / 365) + '年')
+				}
+				if (!(time % 30)) {
+					return ((time / 30 === 1 ? '' : time / 30) + '月')
+				}
+				if (!(time % 7)) {
+					return ((time / 7 === 1 ? '' : time / 7) + '周')
+				}
+				return (time === 1 ? '' : time) + '天'
+			},
+			generate_task(record) {
+				const generate_time = (time) => {
+					let res = ''
+					// 转换为式分秒
+					let h = time / 60 / 60 % 24
+					if (h) {
+						res += (h + '小时')
+					}
+					let m = time / 60 % 60
+					if (m) {
+						res += (m + '分钟')
+					}
+					let s = time % 60
+					if (s) {
+						res += (s + '秒')
+					}
+					// 作为返回值返回
+					return res
+				}
+				switch (record.task_type) {
+					case 1: {
+						return `消费满${record.task_num}次`
+						break
+					}
+					case 2: {
+						return `消费满${record.task_num}元`
+						break
+					}
+					case 3: {
+						return `消费满${generate_time(record.task_num)}`
+						break
+					}
+				}
+			
+			},
+			fetchData(merchant_id) {
+				uni.request({
+					url: 'https://www.imgker.com/yqb/promise/get_user_promises', //仅为示例，并非真实接口地址。
+					data: {
+					},
+					header: {},
+					success: ({
+						data
+					}) => {
+						this.page_data.promise_list = data.data
+					}
+				})
+				uni.request({
+					url: 'https://www.imgker.com/yqb/promise/get_bonus', //仅为示例，并非真实接口地址。
+					data: {
+					},
+					header: {},
+					success: ({
+						data
+					}) => {
+						this.page_data.promise_bonus = new Number(data.data).toFixed(2)
+					}
+				})
+			},
 			getOwnByCoinId(coin_id) {
 				return this.page_data.hold_data.filter(_i => _i.coin_id === coin_id).length
 			},

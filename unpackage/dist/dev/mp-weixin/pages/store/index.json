@@ -1,10 +1,3 @@
 {
-  "usingComponents": {
-    "uni-popup": "/components/uni-popup/uni-popup",
-    "hx-navbar": "/components/hx-navbar/hx-navbar",
-    "uni-icons": "/components/uni-icons/uni-icons",
-    "hx-number-box": "/components/uni-number-box/uni-number-box",
-    "hx-comment": "/components/hx-comment/hx-comment",
-    "fly-in-cart": "/components/flyInCart"
-  }
+  "usingComponents": {}
 }

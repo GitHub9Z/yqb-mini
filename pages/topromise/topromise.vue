@@ -60,7 +60,7 @@
 					<text class="text-black">切换账号</text>
 				</view>
 			</view> -->
-			<view class="cu-item margin-top" style="background-color: #e54d42;" @click="logOut">
+			<view class="cu-item margin-top" style="background-color: #e54d42;" @click="handlePromise">
 				<view class="content" style="text-align: center;">
 					<text class="text-white">确认签约</text>
 				</view>
@@ -79,7 +79,9 @@
 				}
 			}
 		},
-		onLoad({ protocal_id }) {
+		onLoad({
+			protocal_id
+		}) {
 			this.fetch_data(protocal_id)
 		},
 		mounted() {
@@ -133,11 +135,11 @@
 						break
 					}
 				}
-			
+
 			},
 			async fetch_data(protocal_id) {
 				await uni.request({
-					url: 'http://localhost:824/yqb/protocal/get_detail', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/protocal/get_detail', //仅为示例，并非真实接口地址。
 					data: {
 						protocal_id
 					},
@@ -149,16 +151,22 @@
 					}
 				})
 			},
-			logOut() {
-				that.$store.dispatch("logout");
-				that.$api.user.logout();
+			async handlePromise() {
 
-				that.back();
-			},
-			back() {
-				uni.redirectTo({
-					url: '/pages/user/login/login'
-				});
+				await uni.request({
+					url: 'https://www.imgker.com/yqb/promise/create', //仅为示例，并非真实接口地址。
+					data: {
+						protocal_id: this.page_data.detail.id
+					},
+					header: {},
+					success: ({
+						data
+					}) => {
+						uni.reLaunch({
+							url: '/pages/promise/promise'
+						})
+					}
+				})
 			}
 		}
 	}

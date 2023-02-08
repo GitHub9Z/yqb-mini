@@ -9,9 +9,9 @@
 				<text class="tit">{{store.title}}</text>
 				<view class="row justify-content">
 					<view class="row-left">
-						<i class="hxicon-favorfill "></i>
-						<text class="t1">{{store.score}}</text>
-						<text class="t2">{{store.hot || 0}}人已签约</text>
+						<!-- <i class="hxicon-favorfill "></i> -->
+						<text class="t1">{{store.score}}分</text>
+						<text class="t2" v-if="store.hot">{{store.hot || 0}}人已签约</text>
 					</view>
 					<view class="row-right" v-if="store.shops.length">
 						<i class="hxicon-locationfill"></i>
@@ -190,7 +190,7 @@
 					.row-left {
 						display: flex;
 						flex-direction: row;
-
+						align-items: center;
 						.t1,
 						i {
 							color: #ffca3e;

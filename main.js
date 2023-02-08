@@ -46,9 +46,16 @@ uni.request = (params) => {
 		uni.hideLoading()
 		if (res.statusCode === 403) {
 			uni.clearStorageSync()
-			uni.navigateTo({
+			uni.reLaunch({
 				url: '/pages/user/login/login'
 			})
+		}
+		if (!res.data.success) {
+			uni.showToast({
+				icon: 'error',
+				title: res.data.message,
+				duration: 2000
+			});
 		}
 		ori_success(res)
 	}

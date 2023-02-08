@@ -69,7 +69,7 @@
 			...mapActions(['GET_USER_INFO']),
 			async hanldeSmsClick(e) {
 				uni.request({
-					url: 'http://localhost:824/yqb/user/SMS', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/user/SMS', //仅为示例，并非真实接口地址。
 					data: {
 						phone: this.page_status.input_phone,
 					},
@@ -99,7 +99,7 @@
 				// 	success: res => {
 				// 		var code = res.code;
 				// 		uni.request({
-				// 			url: 'http://localhost:824/yqb/user/SMS', //仅为示例，并非真实接口地址。
+				// 			url: 'https://www.imgker.com/yqb/user/SMS', //仅为示例，并非真实接口地址。
 				// 			data: {
 				// 				phone: this.page_status.input_phone,
 				// 				user_info: JSON.stringify(userInfo)
@@ -131,7 +131,7 @@
 			async handleLoginClick() {
 				uni.clearStorageSync()
 				uni.request({
-					url: 'http://localhost:824/yqb/user/LOGIN', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/user/LOGIN', //仅为示例，并非真实接口地址。
 					data: {
 						phone: this.page_status.input_phone,
 						sms: this.page_status.input_sms
@@ -144,7 +144,9 @@
 						if (data.data) {
 							uni.setStorageSync('token', data.data.token)
 							await this.GET_USER_INFO()
-							uni.navigateBack()
+							uni.reLaunch({
+								url: '/pages/index/index'
+							})
 						} else {
 							uni.showToast({
 								title: data.message,

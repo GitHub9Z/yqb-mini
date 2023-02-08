@@ -10,18 +10,19 @@
 		<view class="cu-timeline" v-for="group in page_data.group_list">
 			<view class="cu-time" style="width: 180px;">{{group.name}} 共{{group.list.length}}期</view>
 
-			<view :class="`cu-item text-${page_config.status_enum[promise.status].color}`"
+			<view :class="'cu-item text-' + page_config.status_enum[promise.status].color"
 				v-for="(promise, index) in group.list">
 				<navigator class="content" style="display: flex; align-items: center; justify-content: space-between;"
-					url="/pages/finishpromise/finishpromise" navigateTo>
+					:url="`/pages/finishpromise/finishpromise?promise_id=${promise.id}&from=list`" navigateTo>
 					<view class="text-gray">
 						第{{index + 1}}期
 					</view>
 
 					<view class="cu-capsule radius">
-						<view :class="`cu-tag bg-${page_config.status_enum[promise.status].color}`">
-							{{page_config.status_enum[promise.status].label}}</view>
-						<view :class="`cu-tag line-${page_config.status_enum[promise.status].color}`">2022-07-17 22:32截止
+						<view :class="'cu-tag bg-' + page_config.status_enum[promise.status].color">
+							{{page_config.status_enum[promise.status].label}}
+						</view>
+						<view :class="'cu-tag line-' + page_config.status_enum[promise.status].color" style="width: 170px; ">{{new Date(promise.end_time).toLocaleString()}} 截止
 						</view>
 					</view>
 				</navigator>
@@ -63,35 +64,43 @@
 				},
 				page_data: {
 					// 1:未开始 2:进行中 3:已完成 4:已违约 5:已解约
-					group_list: [{
-						name: '2022-06-17 22:32',
-						list: [{
-							status: 1
-						}, {
-							status: 2
-						}, {
-							status: 3
-						}, {
-							status: 4
-						}, {
-							status: 5
-						}]
-					}, {
-						name: '2022-06-17 22:32',
-						list: [{
-							status: 1
-						}, {
-							status: 2
-						}, {
-							status: 3
-						}, {
-							status: 4
-						}, {
-							status: 5
-						}]
-					}]
+					group_list: []
 				}
 			};
+		},
+		onLoad({
+			protocal_id
+		}) {
+			this.fetch_data(protocal_id)
+		},
+		methods: {
+			async fetch_data(protocal_id) {
+				await uni.request({
+					url: 'https://www.imgker.com/yqb/promise/get_list', //仅为示例，并非真实接口地址。
+					data: {
+						protocal_id
+					},
+					header: {},
+					success: ({
+						data
+					}) => {
+						let group_list = []
+						data.data.forEach(_i => {
+							_i.status = _i.status || 1
+							let group = group_list.find(__i => new Date(_i.create_time).toLocaleString() === __i.name)
+							if (group) {
+								group.list.push(_i)
+							} else {
+								group_list.push({
+									name: new Date(_i.create_time).toLocaleString(),
+									list: [_i]
+								})
+							}
+						})
+						this.page_data.group_list = group_list
+					}
+				})
+			},
 		}
 	}
 </script>

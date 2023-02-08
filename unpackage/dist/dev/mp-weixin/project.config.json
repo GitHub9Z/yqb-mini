@@ -38,12 +38,11 @@
     "minifyWXSS": true,
     "disableUseStrict": false,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
   "libVersion": "",
-  "appid": "wx0915923e90e6cd68",
+  "appid": "wxed3e74d2adf64438",
   "projectname": "hxshop",
   "condition": {
     "search": {

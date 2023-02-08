@@ -45,6 +45,27 @@
 					"scrollIndicator": "none"
 				}
 			}
+		},{
+		    "path" : "pages/user/withdraw/index",
+		    "style" : {
+				"app-plus":{
+					"scrollIndicator": "none"
+				}
+			}
+		},{
+		    "path" : "pages/user/history/index",
+		    "style" : {
+				"app-plus":{
+					"scrollIndicator": "none"
+				}
+			}
+		},{
+		    "path" : "pages/user/wallet/index",
+		    "style" : {
+				"app-plus":{
+					"scrollIndicator": "none"
+				}
+			}
 		},
 		{
 		    "path" : "pages/user/login/login",
@@ -200,6 +221,15 @@
         }
         ,{
             "path" : "pages/listpromise/listpromise",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/voucher/voucher",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

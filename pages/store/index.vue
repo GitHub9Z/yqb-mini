@@ -31,7 +31,7 @@
 		</view>
 		<view class="content-main VerticalBox" :style="{ 'padding-top': `0` }">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop">
-				<view class="cu-item" style="display: flex; align-items: center; justify-content: center;">
+				<view class="cu-item" style="display: flex; align-items: center; justify-content: center; white-space: nowrap">
 					门店 <view class="cu-tag round bg-red sm" style="margin-left: 5px;">99+</view>
 				</view>
 				<view class="cu-item" :class="{ 'text-red': index==tabCur, 'cur': index==tabCur }"
@@ -50,20 +50,23 @@
 					</view>
 					<view class="content-main-content-right cu-list menu-avatar">
 						<navigator class="content-main-content-right-item" v-for="item in group.list" hover-class='none'
-							:url="`/pages/topromise/topromise?protocal_id=${item.id}`" navigateTo>
+							:url="`/pages/${item.doing ? 'finish' : 'to'}promise/${item.doing ? 'finish' : 'to'}promise?${item.doing ? 'promise' : 'protocal'}_id=${item.doing || item.id}`" navigateTo>
 							<view class="content-main-content-right-item-info">
 								<view class="text-black">{{item.title}}</view>
 								<view class="text-gray text-sm flex align-center">
 									<view class='cu-tag bg-red sm' style="margin: 5px 5px 5px 0px; font-size: 10px;">
 										{{generate_task(item)}}</view>
-									<text class="cu-tag bg-gray sm">{{item.hot || 0}}人已签约</text>
+									<text class="cu-tag bg-gray sm" v-if="item.hot">{{item.hot || 0}}人已签约</text>
 
 								</view>
 							</view>
 							<view class="content-main-content-right-item-action">
 								<view class="content-main-content-right-item-action-num text-red text-bold">
 									{{item.bonus}}/{{generate_date(item)}}</view>
-								<view class="cu-tag bg-yellow radius sm" style="padding: 3px 5px; margin: 3px 0;">
+								<view v-if="item.doing" class="cu-tag bg-green radius sm" style="padding: 3px 5px; margin: 3px 0;">
+									已签约
+								</view>
+								<view v-else class="cu-tag bg-yellow radius sm" style="padding: 3px 5px; margin: 3px 0;">
 									立即签约
 								</view>
 
@@ -173,7 +176,7 @@
 			},
 			async fetchData(merchant_id) {
 				await uni.request({
-					url: 'http://localhost:824/yqb/merchant/get_detail', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/merchant/get_detail', //仅为示例，并非真实接口地址。
 					data: {
 						merchant_id
 					},

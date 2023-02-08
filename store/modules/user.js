@@ -62,7 +62,7 @@ const store = {
 			commit
 		}) => {
 			await uni.request({
-				url: 'http://localhost:824/yqb/user/get_info', //仅为示例，并非真实接口地址。
+				url: 'https://www.imgker.com/yqb/user/get_info', //仅为示例，并非真实接口地址。
 				data: {},
 				header: {
 				},

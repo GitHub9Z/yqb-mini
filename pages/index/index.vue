@@ -25,12 +25,12 @@
 		<mescroll-body ref="mescrollRef" :down="downOption" @down="downCallback" @up="upCallback">
 
 			<view class="container menu-box">
-				<view class="item-box" v-for="(item,i) in menuList" :key="i">
+				<navigator class="item-box" v-for="(item,i) in menuList" :key="i" :url="`/pages/search/search?type=${item.type}`" navigateTo>
 					<image :src="item.img" mode=""></image>
 					<view class="tit">
 						<text>{{item.tit}}</text>
 					</view>
-				</view>
+				</navigator>
 			</view>
 			<view class="bannerimg-box">
 				<swiper circular duration="400" interval="10000" autoplay>
@@ -114,23 +114,28 @@
 
 					{
 						img: '/static/img/index/餐饮.png',
-						tit: '餐饮消费'
+						tit: '餐饮消费',
+						type: 1
 					},
 					{
 						img: '/static/img/index/娱乐.png',
-						tit: '休闲玩乐'
+						tit: '休闲玩乐',
+						type: 2
 					},
 					{
 						img: '/static/img/index/住宿.png',
-						tit: '酒店住宿'
+						tit: '酒店住宿',
+						type: 3
 					},
 					{
 						img: '/static/img/index/出行.png',
-						tit: '日常出行'
+						tit: '日常出行',
+						type: 4
 					},
 					{
 						img: '/static/img/index/服装.png',
-						tit: '服装日用'
+						tit: '服装日用',
+						type: 5
 					},
 
 				],
@@ -209,7 +214,7 @@
 				let that = this;
 				//加载门店数据
 				await uni.request({
-					url: 'http://localhost:824/yqb/merchant/get_list', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/merchant/get_list', //仅为示例，并非真实接口地址。
 					data: {
 						current: this.page_status.current,
 						page_size: this.page_config.page_size
@@ -238,7 +243,7 @@
 			//搜索
 			goSearch() {
 				uni.navigateTo({
-					url: '/pages/search/search?type=home'
+					url: '/pages/search/search'
 				})
 			}
 		}

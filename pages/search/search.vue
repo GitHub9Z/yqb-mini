@@ -3,7 +3,7 @@
 		<view class="content-head fixed">
 			<cu-custom :isBack="true" bgColor="bg-red text-white">
 				<block slot="backText">返回</block>
-				<block slot="content">{{page_data.admin_info.user_name || '发现'}}</block>
+				<block slot="content">{{page_config.type_enum[page_status.type] || '发现'}}</block>
 			</cu-custom>
 			<view class="cu-bar bg-white search" style="width: 100vw;">
 				<view class="search-form radius">
@@ -16,9 +16,13 @@
 				</view>
 			</view>
 		</view>
+
 		<view class="content-main" :style="{ 'padding-top': `calc(${get_system_info.custom_bar}px + 130upx)` }">
 			<template v-if="page_data.store_list.length > 0">
 				<Merchant :store="store" v-for="(store, i) in page_data.store_list" :key="i"></Merchant>
+				<view class="foot" v-if="page_status.no_more">
+					<text>更多商家加入中，敬请期待 </text>
+				</view>
 			</template>
 			<empty text="暂无符合条件的商家" v-else></empty>
 		</view>
@@ -45,36 +49,35 @@
 			return {
 				page_config: {
 					page_size: 5,
-					color_config: ['red', 'orange', 'yellow', 'olive', 'green', 'cyan', 'blue', 'purple', 'mauve', 'pink', 'brown',
-						'grey', 'gray'
-					],
+					type_enum: {
+						1: '餐饮',
+						2: '娱乐',
+						3: '日用',
+						4: '出行',
+						5: '服装',
+						6: '运动'
+					}
 				},
 				page_status: {
 					key_word: '',
 					next_page: 0,
-					stature_sort: true,
-					age_sort: true
+					no_more: false
 				},
 				page_data: {
-					store_list: [],
-					user_list: [],
-					admin_info: {},
-					doing: 'list'
+					store_list: []
 				}
 			}
 		},
 		onLoad({
-			invite_id
+			type
 		}) {
-			this.page_data.store_list = testData.storeList;
-			console.log('尼玛', this.get_system_info)
+			this.page_status.type = type
 		},
 		onPullDownRefresh() {
 			this.page_status.next_page = 0
 			console.log('--------下拉刷新-------')
 			uni.showNavigationBarLoading() //在标题栏中显示加载
 			uni.stopPullDownRefresh()
-			if (this.page_status.invite_id) this.fetchAdminInfo()
 			this.handleSearchClick()
 		},
 		onReachBottom() {
@@ -83,122 +86,43 @@
 			this.handleSearchClick()
 		},
 		onShow() {
-			if (this.page_status.doing === 'detail') {
-				this.page_status.doing = 'list'
-				return
-			}
 			this.page_status.next_page = 0
-			if (this.page_status.invite_id) this.fetchAdminInfo()
 			this.handleSearchClick()
 		},
 		onReady() {
 			uni.hideLoading()
 		},
 		computed: {
-			...mapGetters(['get_system_info', 'get_user_info', 'get_find_condition']),
-			condition_num() {
-				console.log('heihe', this.get_find_condition)
-				let num = 0
-				let _c = this.get_find_condition
-				if (_c.genderIndex > 0) num++
-				if (_c.educationIndex > 0) num++
-				if (_c.marriageIndex > 0) num++
-				if (_c.ageMultiIndex && (_c.ageMultiIndex[0] != 0 || _c.ageMultiIndex[1] != 0)) num++
-				if (_c.statureMultiIndex && (_c.statureMultiIndex[0] != 0 || _c.statureMultiIndex[1] != 0)) num++
-				if (_c.bornPool && _c.bornPool.length > 0) num++
-				if (_c.livePool && _c.livePool.length > 0) num++
-				return num
-			}
+			...mapGetters(['get_system_info', 'get_user_info']),
 		},
 		methods: {
-			fetchAdminInfo() {
-				uni.request({
-					url: 'https://www.imgker.com/venus/user/get_admin_info', //仅为示例，并非真实接口地址。
-					data: {
-						invite_id: this.page_status.invite_id
-					},
-					header: {
-						'custom-header': 'hello' //自定义请求头信息
-					},
-					success: (res) => {
-						this.page_data.admin_info = res.data
-						this.$forceUpdate()
-					}
-				})
-			},
-			handleItemClick(user) {
-				this.page_status.doing = 'detail'
-				uni.navigateTo({
-					url: `./detail?user_id=${user.user_id}`
-				})
-			},
 			handleSearchClick() {
 				if (this.page_status.next_page === 0) {
-					this.page_data.user_list = []
+					this.page_data.store_list = []
 				}
 				uni.request({
-					url: 'https://www.imgker.com/venus/user/find_users', //仅为示例，并非真实接口地址。
+					url: 'https://www.imgker.com/yqb/merchant/get_list', //仅为示例，并非真实接口地址。
 					data: {
 						keyword: this.page_status.key_word,
-						inviteId: this.page_status.invite_id || '',
-						condition: JSON.stringify(this.get_find_condition),
-						ageSort: this.page_status.age_sort,
-						statureSort: this.page_status.stature_sort,
+						type: this.page_status.type,
 						pageNo: this.page_status.next_page,
 						pageSize: this.page_config.page_size
 					},
 					header: {
 						'custom-header': 'hello' //自定义请求头信息
 					},
-					success: (res) => {
-						if (res.data.length === this.page_config.page_size) {
-							this.page_status.next_page++
+					success: ({ data }) => {
+						if (data.data.count === this.page_config.page_size) {
+							this.page_status.next_page ++
+						} else {
+							this.page_status.no_more = true
 						}
-						this.page_data.user_list = [
-							...this.page_data.user_list,
-							...res.data.map(_i => {
-								let user_id = _i.user_id
-								let admin = _i.admin
-								let avatar_url = _i.avatar_url
-								let user_name = _i.user_name
-								let hot = _i.hot
-								let update_time = _i.update_time
-								_i = JSON.parse(_i.user_info)
-								_i.user_id = user_id
-								_i.admin = admin
-								_i.avatar_url = avatar_url
-								_i.user_name = user_name
-								_i.hot = hot
-								_i.update_time = update_time
-								let [b_province_index, b_city_index, b_area_index] = _i.bornMultiIndex || []
-								let [l_province_index, l_city_index, l_area_index] = _i.liveMultiIndex || []
-								_i.tag = [
-									_i.gender ? ['男', '女'][_i.gender] : null,
-									_i.date ? _i.date[2] + _i.date[3] + '年' : null,
-									_i.bornMultiIndex ? `${areaJson[b_province_index].city[b_city_index].area[b_area_index]}` : null,
-									_i.liveMultiIndex ? `${areaJson[l_province_index].city[l_city_index].area[l_area_index]}工作` : null,
-									..._i.hobby
-								].filter(_i => _i)
-								return _i
-							}).filter(_i => this.page_data.user_list.every(__i => __i.user_id !== _i.user_id))
+						this.page_data.store_list = [
+							...this.page_data.store_list,
+							...data.data.data.filter(_i => this.page_data.store_list.every(__i => __i.id !== _i.id))
 						]
 					}
 				})
-			},
-			handleConditionClick() {
-				uni.navigateTo({
-					url: './findcond'
-				})
-			},
-			handleStatureSortClick() {
-				this.page_status.next_page = 0
-				this.page_status.stature_sort = !this.page_status.stature_sort
-				this.handleSearchClick()
-			},
-			handleAgeSortClick() {
-				this.page_status.next_page = 0
-				this.page_status.age_sort = !this.page_status.age_sort
-				this.handleSearchClick()
 			}
 		},
 	}
@@ -285,4 +209,34 @@
 		background-color: #f1f1f1;
 		flex: 1;
 	}
+	.foot {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		margin-top: 36px;
+		margin-bottom: 50px;
+	
+		text {
+			font-size: 14px;
+			position: relative;
+			z-index: 2;
+			height: 20px;
+			line-height: 20px;
+			color: #cccccc;
+			padding: 0 12px;
+		}
+	}
+	
+	.foot::before {
+		content: "";
+		z-index: 1;
+		display: block;
+		position: absolute;
+		top: 50%;
+		height: 0;
+		width: 100%;
+		transform: scaleY(0.5);
+		border-bottom: 1px solid #E4E7ED;
+	}
+	
 </style>
