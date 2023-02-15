@@ -110,8 +110,8 @@
 }
 .header .storeInfo .storeAvatar.data-v-38de483b {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 72px;
+  height: 54px;
   right: 16px;
   top: -25px;
   background: #ffffff;

@@ -8,8 +8,8 @@
 			<image class="header-bg bg-red"></image>
 			<view class="header-top-Placeholder"></view>
 			<view class="container storeInfo" :style="{height: '100px', width: '90vw', boxShadow: ''}">
-				<image class="storeAvatar hx-shadow" style="width: 80px;"
-					src="https://img1.baidu.com/it/u=2220543861,3867330206&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=375"
+				<image class="storeAvatar hx-shadow"
+					:src="page_data.detail.header"
 					mode="aspectFill"></image>
 				<view class="text-bold text-xxl" style="margin-bottom: 7px;">
 					{{page_data.detail.title}}
@@ -368,8 +368,8 @@
 
 			.storeAvatar {
 				position: absolute;
-				width: 50px;
-				height: 50px;
+				width: 72px;
+				height: 54px;
 				right: 16px;
 				top: -25px;
 				background: #ffffff;

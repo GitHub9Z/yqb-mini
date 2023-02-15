@@ -82,7 +82,7 @@
 				view.fields({
 					rect: true
 				}, res => {
-					if (res.top == 0) {
+					if (res.top < 5) {
 						that.GDHEAD = 1;
 					} else {
 						that.GDHEAD = 0;

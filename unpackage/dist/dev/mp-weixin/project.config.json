@@ -38,7 +38,8 @@
     "minifyWXSS": true,
     "disableUseStrict": false,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false
+    "useCompilerPlugins": false,
+    "minifyWXML": true
   },
   "compileType": "miniprogram",
   "libVersion": "",
@@ -55,32 +56,7 @@
       "list": []
     },
     "miniprogram": {
-      "list": [
-        {
-          "name": "test",
-          "query": "",
-          "id": 0,
-          "pathName": "pages/user/login/login"
-        },
-        {
-          "name": "product",
-          "query": "",
-          "id": 1,
-          "pathName": "pages/product/product"
-        },
-        {
-          "name": "store",
-          "query": "",
-          "id": 2,
-          "pathName": "pages/store/index"
-        },
-        {
-          "name": "setting",
-          "query": "",
-          "id": 3,
-          "pathName": "pages/user/setting/setting"
-        }
-      ]
+      "list": []
     }
   }
 }

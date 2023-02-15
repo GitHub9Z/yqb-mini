@@ -41,8 +41,8 @@
   border-radius: 10rpx;
 }
 .user-section.data-v-7d697a78 {
-  height: 520rpx;
-  padding: 100rpx 30rpx 0;
+  height: 620rpx;
+  padding: 200rpx 30rpx 0;
   position: relative;
 }
 .user-section .bg.data-v-7d697a78 {

@@ -1,10 +1,5 @@
 <template>
 	<view class="content">
-		<view class="content-head fixed">
-			<cu-custom bgColor="bg-red text-white">
-				<block slot="content">我的合约</block>
-			</cu-custom>
-		</view>
 		<template v-if="page_data.promise_list.length">
 		<view class="content-board bg-red">
 			<view class="content-board-title">本月预计收益</view>
@@ -18,7 +13,7 @@
 					{{group.type}}
 				</view>
 			</scroll-view>
-			<scroll-view class="content-main-content VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 200upx)"
+			<scroll-view class="content-main-content VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 315px)"
 			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
 				<view class="content-main-content-litem padding-bottom padding-lr" v-for="(group, index) in promises" :key="index"
 				 :id="'main-'+index">
@@ -83,7 +78,8 @@
 					}
 				},
 				page_data: {
-					promise_list: []
+					promise_list: [],
+					promise_bonus: '0.00'
 				},
 				list: [],
 				tabCur: 0,
@@ -242,7 +238,7 @@
 	.content {
 		.content-head {}
 		.content-board {
-			height: 200px;
+			height: 300px;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -305,10 +301,6 @@
 		}
 	}
 
-	.fixed {
-		position: fixed;
-		z-index: 99;
-	}
 
 	.VerticalNav.nav {
 		width: 200upx;
